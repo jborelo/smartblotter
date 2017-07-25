@@ -46,7 +46,6 @@ url = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_SET'
 userName = 'AISAP_TEST'
 passWord = 'asyai.1'
 
-
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
