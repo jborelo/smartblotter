@@ -1,0 +1,76 @@
+https://console.api.ai/api-client/demo/embedded/89b9a3ee-9d1a-42be-a0e6-4fe703150a34
+
+{
+	"id":"4109135a-3400-4a54-8ba2-40a2c9cf65d2",
+	"timestamp":"2017-05-18T08:11:39.467Z",
+	"lang":"en",
+	"result":
+		{
+			"source":"agent",
+			"resolvedQuery":"I need banker",
+			"action":"SetUpMeeting",
+			"actionIncomplete":true,
+			"parameters":
+				{
+					"date":"",
+					"department":"",
+					"email":"",
+					"location":"",
+					"subject":""
+				},
+			"contexts":
+				[
+					{
+						"name":"meetabanker_dialog_context",
+						"parameters":
+							{
+								"subject.original":"",
+								"date":"",
+								"email.original":"",
+"location.original":"",
+"subject":"",
+"date.original":"",
+"location":"",
+"department.original":"",
+"department":"",
+"email":""},
+"lifespan":2},
+{"name":"92075ec1-6497-42c4-b23f-2c127e86fe05_id_dialog_context",
+"parameters":{"subject.original":"",
+"date":"",
+"email.original":"",
+"location.original":"",
+"subject":"",
+"date.original":"",
+"location":"",
+"department.original":"",
+"department":"",
+"email":""},
+"lifespan":2},
+{"name":"meetabanker_dialog_params_department",
+"parameters":{"subject.original":"",
+"date":"",
+"email.original":"",
+"location.original":"",
+"subject":"",
+"date.original":"",
+"location":"",
+"department.original":"",
+"department":"",
+"email":""},
+"lifespan":1}],
+"metadata":{"intentId":"92075ec1-6497-42c4-b23f-2c127e86fe05",
+"webhookUsed":"true",
+"webhookForSlotFillingUsed":"true",
+"webhookResponseTime":62,
+"intentName":"MeetABanker"},
+"fulfillment":{"speech":"Ok,
+ what are You interested in?",
+"messages":[{"type":0,
+"speech":"Ok,
+ what are You interested in?"}]},
+"score":0.66},
+"status":{"code":206,
+"errorType":"partial_content",
+"errorDetails":"Webhook call failed. Error: Webhook response was empty."},
+"sessionId":"d64a69dd-1a92-9aac-472c-2a8274b5b866"}
