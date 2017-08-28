@@ -29,6 +29,7 @@ from flask import Flask, render_template
  
 from flask import request
 from flask import make_response
+from flask import jsonify
 
 import time
 
@@ -41,6 +42,13 @@ app = Flask(__name__, static_url_path='/')
 #           -   end.dateTime = start.dateTime + 30 minut
 # email     -   attendees.email
 
+# If modifying these scopes, delete your previously saved credentials
+# at ~/.credentials/calendar-python-quickstart.json
+SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
+CLIENT_SECRET_FILE = 'spreadsheet-python.json'
+APPLICATION_NAME = 'GoogleSheet'
+#GOOGLEMAPS_KEY = 'AIzaSyDfz3rsgtrZ3pymjhMyz9CJeLAU7yfR5SI'
+SHEETID = '1k_Nj1JBDcjScQzAIr2ID3zj1xyWsADFqtIaSp5YV9RE'
 
 url = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_SET'
 userName = 'AISAP_TEST'
@@ -54,6 +62,22 @@ def webhook():
     print(json.dumps(req, indent=4))
 
     res = processRequest(req)
+
+    #res = json.dumps(res, indent=4)
+    # print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
+@app.route('/querytext', methods=['POST'])
+def queryText():
+    req = request.get_json(silent=True, force=True)
+
+    print("Request:")
+    print(json.dumps(req, indent=4))
+
+    #res = processRequest(req)
+    res = { "result": "DUPA" }
 
     #res = json.dumps(res, indent=4)
     # print(res)
@@ -80,6 +104,323 @@ def processRequest(req):
         return {}
     return res
 
+def get_credentials():
+    """Gets valid user credentials from storage.
+
+    If nothing has been stored, or if the stored credentials are invalid,
+    the OAuth2 flow is completed to obtain the new credentials.
+
+    Returns:
+        Credentials, the obtained credential.
+    """
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    credential_dir = os.path.join(script_dir, 'credentials')
+    #print("Credential dir: %s" % credential_dir)
+#    if not os.path.exists(credential_dir):
+#        os.makedirs(credential_dir)
+    credential_path = os.path.join(credential_dir, 'sheets.json')
+
+    #print("Credential path: %s" % credential_path)
+    store = Storage(credential_path)
+    #print("Storage: %s" % credential_path)
+    credentials = store.get()
+    #print("store.get()")
+    if not credentials or credentials.invalid:
+        secret_path = os.path.join(credential_dir, CLIENT_SECRET_FILE)
+        flow = client.flow_from_clientsecrets(secret_path, SCOPES)
+        flow.user_agent = APPLICATION_NAME
+        if flags:
+            credentials = tools.run_flow(flow, store, flags)
+        else: # Needed only for compatibility with Python 2.6
+            credentials = tools.run(flow, store)
+        print('Storing credentials to ' + credential_path)
+    return credentials
+
+def gmailLogin():
+    """Shows basic usage of the Google Calendar API.
+
+    Creates a Google Calendar API service object and outputs a list of the next
+    10 events on the user's calendar.
+    """
+    print("Gmail Login")
+    credentials = get_credentials()
+    print("Authorization")
+    http = credentials.authorize(httplib2.Http())
+    print("Http poszlo")
+    #return discovery.build('calendar', 'v3', http=http)
+    discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
+                    'version=v4')
+    return discovery.build('sheets', 'v4', http=http, discoveryServiceUrl=discoveryUrl)
+
+def generateAvailableSpeach(speech, stepTime, event):
+    
+    if (stepTime + datetime.timedelta(minutes = meetingTime) <= datetime.datetime.strptime(event.get("start").get("dateTime")[:19], '%Y-%m-%dT%H:%M:%S')):
+        if (speech != ""):
+            speech += " and "
+
+        speech += "%s - %s" % (datetime.datetime.strftime(stepTime, '%H:%M'), event.get("start").get("dateTime")[11:16])
+
+    return (speech, datetime.datetime.strptime(event.get("end").get("dateTime")[:19], '%Y-%m-%dT%H:%M:%S'))
+
+def returnSpeech(speech, displayText=None, contexts=[], followUpEvent={}):
+    if (displayText is None):
+        displayText = speech
+
+    result = {
+        "speech": speech,
+        "displayText": displayText,
+        "contextOut": contexts,
+        "source": "webhook-createEvent"
+    }
+
+    if len(followUpEvent) > 0:
+        result["followupEvent"] = followUpEvent
+
+    return result
+
+def getParam(req, field):
+    if (field in req.get("result").get("parameters")):
+        if (type(req.get("result").get("parameters").get(field)) is list):
+            return ", ".join(req.get("result").get("parameters").get(field))
+        else:
+            return req.get("result").get("parameters").get(field)
+    return None
+
+def getSParam(req, field):
+    result = getParam(req, field)
+    if result is None:
+        return ""
+
+    return result
+
+def getContextParam(req, name, field):
+    for context in req.get("result").get("contexts"):
+        if context.get("name") == name:
+            print(type(context.get("parameters").get(field)))
+            if (field in context.get("parameters")):
+                if (type(context.get("parameters").get(field)) is list):
+                    return ", ".join(context.get("parameters").get(field))
+                elif (type(context.get("parameters").get(field)) is dict):
+                    return getStrFromDict(context.get("parameters").get(field))
+                else:
+                    return context.get("parameters").get(field)
+
+    return None
+
+def getStrFromDict(value):
+    result = ""
+    for key in value:
+        result += "%s " % value[key]
+
+    return result
+
+def removeMeeting(req):
+    
+    print("removeMeeting")
+    #"date": "2017-05-13T15:00:00Z", 
+    #         %Y-%m-%dT%H:%M:%SZ"
+
+    service = gmailLogin()
+    # Check Department
+    calendars = getCalendarsFromDepartment(service, req.get("result").get("parameters").get("department"))
+    pprint(calendars)
+
+    for calendar in calendars:
+        page_token = None
+        while True:
+            events = service.events().list(calendarId=calendar["id"], pageToken=page_token).execute()
+            for event in events['items']:
+                #print("Delete event:" + event["summary"])
+                service.events().delete(calendarId=calendar["id"], eventId=event["id"]).execute()
+            page_token = events.get('nextPageToken')
+            if not page_token:
+                break
+
+    speech = 'Events are deleted'
+    
+    print(speech)
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "webhook-deleteEvents"
+    }
+
+
+def prepareHeaders(req):
+    print("Create Headers")
+    value_range_body = {
+        "values": [
+            [ 
+                "Name", 
+                "SIN", 
+                "Age", 
+                "Medicine", 
+                "Dose", 
+                "OtherMeds", 
+                "AdverseEffectStart", 
+                "StartTime", 
+                "Dissease", 
+                "AdverseEffect",
+                "Remarks"
+            ]
+        ]
+
+    }
+
+    appendRow(req, value_range_body)
+
+    speech = "Headers are created"
+
+    return returnSpeech(speech)
+
+
+def createRow(req):
+    print("Create ROW")
+
+    createConv(req)
+
+    if req.get("result").get("actionIncomplete") == True:
+        return returnSpeech(req.get("result").get("fulfillment").get("speech"))
+
+    value_range_body = {
+        "values": [
+            [ 
+                getContextParam(req, "identity", "Name"), 
+                getContextParam(req, "identity", "SIN"), 
+                getContextParam(req, "identity", "Age"), 
+                getContextParam(req, "identity", "Medicine"), 
+                getContextParam(req, "identity", "Dose"), 
+                getContextParam(req, "identity", "OtherMeds"), 
+                getContextParam(req, "identity", "AdverseEffectStart"), 
+                getContextParam(req, "identity", "StartTime"), 
+                getContextParam(req, "identity", "Dissease"), 
+
+                getContextParam(req, "identity", "AdverseEffect"),
+                getContextParam(req, "identity", "Remarks")
+            ]
+        ]
+
+    }
+
+    appendRow(req, "Arkusz1!A1", value_range_body)
+
+    speech = "Added"
+
+    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
+
+def createConv(req):
+    
+    client = "Client: " + req.get("result").get("resolvedQuery") + "\n"
+    bot = "Bot: " + req.get("result").get("fulfillment").get("speech") + "\n"
+    
+    with open("conv.txt", "a") as myfile:
+        myfile.write(client)
+        myfile.write(bot)
+
+    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
+
+
+def createConversation(req):
+    print("Create Conv")
+    value_range_body = {
+        "values": [
+            [ 
+                "Client:", req.get("result").get("resolvedQuery")
+            ],
+            [
+                "Bot:", req.get("result").get("fulfillment").get("speech")
+            ]
+        ]
+
+    }
+
+    appendRow(req, "Arkusz2!A1", value_range_body)
+
+    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
+
+
+def appendRow(req, sheetRange, values):
+    print("Append ROW")
+
+    service = gmailLogin()
+
+    # The A1 notation of a range to search for a logical table of data.
+    # Values will be appended after the last row of the table.
+    range_ = sheetRange  # TODO: Update placeholder value.
+
+    # How the input data should be interpreted.
+    value_input_option = 'RAW'  # TODO: Update placeholder value.
+
+    # How the input data should be inserted.
+    insert_data_option = 'INSERT_ROWS'  # TODO: Update placeholder value.
+    # "parameters": {
+    #  "AdverseEffect": [
+    #    "Eye allergy"
+    #  ],
+    #  "AdverseEffectStart": "2017-07-18",
+    #  "Dissease": "headake",
+    #  "Dose": "mg",
+    #  "Medicine": "Aspirin",
+    #  "OtherMeds": "only aspirin",
+    #  "Remarks": "all",
+    #  "StartTime": "10:00:00"
+
+    request = service.spreadsheets().values().append(spreadsheetId=SHEETID, range=range_, valueInputOption=value_input_option, insertDataOption=insert_data_option, body=values)
+    response = request.execute()
+    
+    return response
+
+def getLines(rowid):
+
+    f = open('conv.txt', 'r')
+
+    i = 1
+
+    result = ""
+
+    for line in f:
+        if (i == rowid):
+            result = line[:-1]
+        i += 1
+
+    return result
+
+
+def getRows(sheetRange):
+    print("Get ROWs" + sheetRange)
+
+    service = gmailLogin()
+
+    # The A1 notation of a range to search for a logical table of data.
+    # Values will be appended after the last row of the table.
+    range_ = sheetRange  # TODO: Update placeholder value.
+
+
+    # How values should be represented in the output.
+    # The default render option is ValueRenderOption.FORMATTED_VALUE.
+    value_render_option = 'UNFORMATTED_VALUE'  # TODO: Update placeholder value.
+
+    # How dates, times, and durations should be represented in the output.
+    # This is ignored if value_render_option is
+    # FORMATTED_VALUE.
+    # The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
+    #date_time_render_option = ''  # TODO: Update placeholder value.
+
+    request = service.spreadsheets().values().get(spreadsheetId=SHEETID, range=range_, valueRenderOption=value_render_option) #, dateTimeRenderOption=date_time_render_option)
+    response = request.execute()
+    
+    if ('values' in response):
+        return response.get("values")[0][0] + " " + response.get("values")[0][1]
+    else:
+        return ""
+
+#################################################################################################
+#################################################################################################
+#################################################################################################
+
 def sapLogin():
     # Tutaj zrobi sobie pytanie do SAPa
     
@@ -101,73 +442,45 @@ def getResultParam(req, field):
 
     return req.get("result").get("parameters").get(field)
 
-def getLicense(req):
-
-    
-    
-    
-    opener = sapLogin()
-    
-    result = askSap(opener, data=None)
-
-    return result.read().decode('utf-8')
+#def getLicense(req):
+#    
+#    opener = sapLogin()
+#    
+#    result = askSap(opener, data=None)
+#
+#    return result.read().decode('utf-8')
 
 
-def getTest(req):
-    print("GetTEST")
+def postForm(req):
+    print("POST FORM")
+    
+    #    curl -H "Content-Type: application/json; charset=utf-8" -H "Authorization: Bearer YOUR_ACCESS_TOKEN" --data "{'query':'and for tomorrow', 'timezone':'GMT-5', 'lang':'en', 'contexts':[{ 'name': 'weather', 'parameters':{'city': 'London'}, 'lifespan': 4}], 'sessionId':'1234567890'}" "https://api.api.ai/v1/query?v=20150910"
    
-    opener = sapLogin()
-    #data = urllib.parse.urlencode(values)
-
-#     set-cookie: sap-usercontext=sap-client=005; path=/
-#     set-cookie: SAP_SESSIONID_SD1_005=ka-wcYHeCK9olgbGGa6s0J-A-7RQTRHntmUAUFa7dK4%3d; path=/
-#     content-type: application/atom+xml;type=feed; charset=utf-8
-#     content-length: 10147
-#     x-csrf-token: Wk5AWTREx1Hk7nXXF_z5mQ==
-#     dataserviceversion: 2.0
-#     sap-metadata-last-modified: Mon, 12 Jun 2017 13:42:10 GMT
-#     cache-control: no-store, no-cache
-# 
-
-
-    tokenGet = askSap(opener, data=None, headers={'X-CSRF-Token': "Fetch"})
-
-    for key, value in tokenGet.getheaders():
-        print(key + ": " + value) 
-    
-    xcsrfToken = tokenGet.getheader('x-csrf-token', default=None)
-    cookies = tokenGet.getheader('set-cookie', default=None)
-
-    pprint(cookies)
-
-    if xcsrfToken is None:
-        return {}
 
     values = {
-            "LicType"       : getResultParam(req, "License"),
-            "TextLicType"   : getResultParam(req, "License"),
-            "LicPurTotal"   : "2"
+            "query"       : getPostParam(req, "query"),
+            "event"       : { "name": "extractEntities_event"},
+            "v"           : "20150910",
+            "sessionId"   : "AlaMaKota",
+            "lang"        : "en"
             }
-   
-    pprint(values)
+ 
     #data = str.encode(urllib.parse.urlencode(values), 'utf-8')
     data = str.encode(json.dumps(values), 'utf-8')
 
-    time.sleep(2)
-
     pprint(data)
     headers = {
-            'x-csrf-token': xcsrfToken,
+            'Authorization': 'Bearer 0171fbb8f73e4d77a9bb918fca99ec6d',
             'Content-Type': 'application/json; charset=utf-8',
             'Content-Length': len(data)
             }
 
-    result = askSap(opener, data=data, headers=headers, method='POST')
+    result = askPage(opener, data=data, headers=headers, method='POST')
     
     return result.read().decode('utf-8')
 
 
-def askSap(opener, data=None, headers=None, method='GET'):
+def askPage(opener, data=None, headers=None, method='GET'):
 
     request = urllib.request.Request(url, method=method)
     if headers is not None:

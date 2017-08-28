@@ -1,0 +1,69 @@
+{
+  "id": "7f4fea7f-139c-4ad5-a67f-0a00e5cb321c",
+  "query": "Enzo  jest gamoniem. DATE: 24 June 2017 .Enzo   . Trader BP. Hello I'm long crude. What do you have? 5,000 tonnes left over at Rotterdam +/- 10% Crude Oil Mix CN27090090 - CIF",
+  "timestamp": "2017-07-25T18:13:12.977Z",
+  "lang": "en",
+  "contexts": [
+      {
+        "name": "extractentities_dialog_params_trader",
+        "parameters": {
+          "buyer.original": "",
+          "book": "",
+          "trader": "",
+          "VolumeUnit.original": "",
+          "comodity": "crude oil",
+          "comodity.original": "",
+          "buyer": "",
+          "volume": "",
+          "location.original": "",
+          "trader.original": "",
+          "VolumeUnit": "Barrels",
+          "volume.original": "",
+          "location": "",
+          "book.original": ""
+        },
+        "lifespan": 1
+      },
+      {
+        "name": "71e07f9b-328e-4766-9415-f7ac680d5ccb_id_dialog_context",
+        "parameters": {
+          "buyer.original": "",
+          "book": "",
+          "trader": "",
+          "VolumeUnit.original": "",
+          "comodity": "crude oil",
+          "comodity.original": "",
+          "buyer": "",
+          "volume": "",
+          "location.original": "",
+          "trader.original": "",
+          "VolumeUnit": "Barrels",
+          "volume.original": "",
+          "location": "",
+          "book.original": ""
+        },
+        "lifespan": 2
+      },
+      {
+        "name": "extractentities_dialog_context",
+        "parameters": {
+          "buyer.original": "",
+          "book": "",
+          "trader": "",
+          "VolumeUnit.original": "",
+          "comodity": "crude oil",
+          "comodity.original": "",
+          "buyer": "",
+          "volume": "",
+          "location.original": "",
+          "trader.original": "",
+          "VolumeUnit": "Barrels",
+          "volume.original": "",
+          "location": "",
+          "book.original": ""
+        },
+        "lifespan": 2
+      }
+  ],
+  "sessionId": "0dd9a866-29cb-4a2d-bdc5-586913c24756"
+}

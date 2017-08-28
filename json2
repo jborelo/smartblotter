@@ -1,0 +1,28 @@
+{
+    "event"       :   
+    {   
+        "name": "extractEntities_event",
+        "data": 
+             {
+		"text": "DATE: 24 June 2017
+Enzo    Trader BP
+Hello
+I’m long crude
+What do you have?
+5,000 tonnes left over at Rotterdam
++/- 10%
+Crude Oil Mix CN27090090 – CIF"   }
+
+
+    }, 
+
+
+
+            
+            "v"           : "20150910",
+            "sessionId"   : "0dd9a866-29cb-4a2d-bdc5-586913c24756",
+            "lang"        : "en"
+            }
+
+
+

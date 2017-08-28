@@ -1,0 +1,103 @@
+{
+  "id": "7f4fea7f-139c-4ad5-a67f-0a00e5cb321c",
+  "timestamp": "2017-07-25T18:13:12.977Z",
+  "lang": "en",
+  "result": {
+    "source": "agent",
+    "resolvedQuery": "extractEntities_event",
+    "action": "extractEntities_action",
+    "actionIncomplete": true,
+    "parameters": {
+      "book": "",
+      "buyer": "",
+      "comodity": "crude oil",
+      "location": "",
+      "trader": "",
+      "volume": "",
+      "VolumeUnit": "Barrels"
+    },
+    "contexts": [
+      {
+        "name": "extractentities_dialog_params_trader",
+        "parameters": {
+          "buyer.original": "",
+          "book": "",
+          "trader": "",
+          "VolumeUnit.original": "",
+          "comodity": "crude oil",
+          "comodity.original": "",
+          "buyer": "",
+          "volume": "",
+          "location.original": "",
+          "trader.original": "",
+          "VolumeUnit": "Barrels",
+          "volume.original": "",
+          "location": "",
+          "book.original": ""
+        },
+        "lifespan": 1
+      },
+      {
+        "name": "71e07f9b-328e-4766-9415-f7ac680d5ccb_id_dialog_context",
+        "parameters": {
+          "buyer.original": "",
+          "book": "",
+          "trader": "",
+          "VolumeUnit.original": "",
+          "comodity": "crude oil",
+          "comodity.original": "",
+          "buyer": "",
+          "volume": "",
+          "location.original": "",
+          "trader.original": "",
+          "VolumeUnit": "Barrels",
+          "volume.original": "",
+          "location": "",
+          "book.original": ""
+        },
+        "lifespan": 2
+      },
+      {
+        "name": "extractentities_dialog_context",
+        "parameters": {
+          "buyer.original": "",
+          "book": "",
+          "trader": "",
+          "VolumeUnit.original": "",
+          "comodity": "crude oil",
+          "comodity.original": "",
+          "buyer": "",
+          "volume": "",
+          "location.original": "",
+          "trader.original": "",
+          "VolumeUnit": "Barrels",
+          "volume.original": "",
+          "location": "",
+          "book.original": ""
+        },
+        "lifespan": 2
+      }
+    ],
+    "metadata": {
+      "intentId": "71e07f9b-328e-4766-9415-f7ac680d5ccb",
+      "webhookUsed": "false",
+      "webhookForSlotFillingUsed": "false",
+      "intentName": "extractEntities"
+    },
+    "fulfillment": {
+      "speech": "What is the trader?",
+      "messages": [
+        {
+          "type": 0,
+          "speech": "What is the trader?"
+        }
+      ]
+    },
+    "score": 1.0
+  },
+  "status": {
+    "code": 200,
+    "errorType": "success"
+  },
+  "sessionId": "0dd9a866-29cb-4a2d-bdc5-586913c24756"
+}
