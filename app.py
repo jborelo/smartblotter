@@ -437,34 +437,61 @@ def sapLogin():
 
     urllib.request.install_opener(opener)
     return opener
+ 
+def setSession():
+    # Tutaj zrobi sobie pytanie do SAPa
+    
+    cj = http.cookiejar.CookieJar()
+    #opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+    #r = opener.open("http://example.com/")
+    
+    #passwordManager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+    #passwordManager.add_password(None, url, userName, passWord);
+
+    #auth_handler = urllib.request.HTTPBasicAuthHandler(passwordManager)
+
+    #opener = urllib.request.build_opener(auth_handler, urllib.request.HTTPCookieProcessor(cj))
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+
+    urllib.request.install_opener(opener)
+    return opener
     
 def getResultParam(req, field):
 
     return req.get("result").get("parameters").get(field)
 
-#def getLicense(req):
-#    
-#    opener = sapLogin()
-#    
-#    result = askSap(opener, data=None)
-#
-#    return result.read().decode('utf-8')
+def getLicense(req):
+    
+    opener = sapLogin()
+    
+    result = askSap(opener, data=None)
+
+    return result.read().decode('utf-8')
+
+def setValue(sessionId, query=None, event=None):
+
+    values = {
+            "v"           : "20150910",
+            "sessionId"   : sessionId,
+            "lang"        : "en"
+            }
+
+    if query is not None:
+        values["query"] = query
+        return values
+    
+    if event is not None:
+        values["event"] = { "name": event }
+        return values
+
+    return None
 
 
-def postForm(req):
+def postForm(opener, values):
     print("POST FORM")
     
     #    curl -H "Content-Type: application/json; charset=utf-8" -H "Authorization: Bearer YOUR_ACCESS_TOKEN" --data "{'query':'and for tomorrow', 'timezone':'GMT-5', 'lang':'en', 'contexts':[{ 'name': 'weather', 'parameters':{'city': 'London'}, 'lifespan': 4}], 'sessionId':'1234567890'}" "https://api.api.ai/v1/query?v=20150910"
    
-
-    values = {
-            "query"       : getPostParam(req, "query"),
-            "event"       : { "name": "extractEntities_event"},
-            "v"           : "20150910",
-            "sessionId"   : "AlaMaKota",
-            "lang"        : "en"
-            }
- 
     #data = str.encode(urllib.parse.urlencode(values), 'utf-8')
     data = str.encode(json.dumps(values), 'utf-8')
 
@@ -498,15 +525,20 @@ def askPage(opener, data=None, headers=None, method='GET'):
 
     return result
 
+def getTest(req):
+
+    # Ustalamy sesje - logujemy sie
+    # Wywolujemy event, a potem linijka po linijce
+    # 
+
+    return 0
+
 
 
 Actions = {
     'get.licenses.list': getLicense,
     'getTest': getTest
 }
-
-
-
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
