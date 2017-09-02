@@ -50,7 +50,7 @@ APPLICATION_NAME = 'GoogleSheet'
 #GOOGLEMAPS_KEY = 'AIzaSyDfz3rsgtrZ3pymjhMyz9CJeLAU7yfR5SI'
 SHEETID = '1k_Nj1JBDcjScQzAIr2ID3zj1xyWsADFqtIaSp5YV9RE'
 
-url = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_SET'
+sapurl = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_SET'
 userName = 'AISAP_TEST'
 passWord = 'asyai.1'
 
@@ -96,8 +96,10 @@ def root(page_name):
 def processRequest(req):
     print("processRequest")
     akcja = req.get("result").get("action") 
-    #print(akcja)
+    print(akcja)
     #print(Actions[akcja])
+    
+    
     if akcja in Actions:
         res = Actions[akcja](req)
     else:
