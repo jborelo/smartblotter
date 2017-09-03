@@ -547,9 +547,7 @@ def getTest(req):
 def defaultIntent(req):
 
     followupevent = {
-        "followupEvent": {
-            "name": "extractEntities_event",
-        }
+        "name": "extractEntities_event"
     }
 
     speech = "Please provide your message"
