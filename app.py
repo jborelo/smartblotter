@@ -63,7 +63,7 @@ def webhook():
 
     res = processRequest(req)
 
-    #res = json.dumps(res, indent=4)
+    res = json.dumps(res, indent=4)
     # print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
@@ -76,8 +76,8 @@ def queryText():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    #res = processRequest(req)
-    res = { "result": "DUPA" }
+    res = processRequest(req)
+    #res = { "result": "DUPA" }
 
     #res = json.dumps(res, indent=4)
     # print(res)
@@ -174,6 +174,15 @@ def returnSpeech(speech, displayText=None, contexts=[], followUpEvent={}):
         "contextOut": contexts,
         "source": "webhook-createEvent"
     }
+
+#    {
+#        "followupEvent": {
+#            "name": "<event_name>",
+#            "data": {
+#                "<parameter_name>":"<parameter_value>>"
+#            }
+#        }
+#    }
 
     if len(followUpEvent) > 0:
         result["followupEvent"] = followUpEvent
@@ -535,11 +544,23 @@ def getTest(req):
 
     return 0
 
+def defaultIntent(req):
+
+    followupevent = {
+        "followupEvent": {
+            "name": "extractEntities_event",
+        }
+    }
+
+    speech = "Please provide your message"
+
+    return returnSpeech(speech, followUpEvent=followupevent)
 
 
 Actions = {
     'get.licenses.list': getLicense,
-    'getTest': getTest
+    'getTest': getTest,
+    'Display' : defaultIntent
 }
 
 if __name__ == '__main__':
