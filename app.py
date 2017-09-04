@@ -293,22 +293,22 @@ def createRow(req):
     #if req.get("result").get("actionIncomplete") == True:
     #    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
-    dealN = "%f" % time.time()
+    dealNr = "%f" % time.time()
 
     value_range_body = {
         "values": [
             [ 
                 dealNr[:10],                                    # Deal Number
                 datetime.datetime.strftime(datetime.datetime.now(), '%d.%m.%Y'), # Current Date
-                getContextParam(req, "bloter", "Buyer"),        # Buyer
-                getContextParam(req, "bloter", "Seller"),       # Seller
-                getContextParam(req, "bloter", "StartDate"),    # StartDate
-                getContextParam(req, "bloter", "EndDate"),      # EndDate
-                getContextParam(req, "bloter", "Quantity"),     # Quantity
-                getContextParam(req, "bloter", "QuantityUnit"), # QuantityUnit
-                getContextParam(req, "bloter", "Price"),        # Price
-                getContextParam(req, "bloter", "Currency"),     # Currency
-                getContextParam(req, "bloter", "Location")      # Location
+                getSParam(req, "Buyer"),        # Buyer
+                getSParam(req, "Seller"),       # Seller
+                getSParam(req, "StartDate"),    # StartDate
+                getSParam(req, "EndDate"),      # EndDate
+                getSParam(req, "Quantity"),     # Quantity
+                getSParam(req, "QuantityUnit"), # QuantityUnit
+                getSParam(req, "Price"),        # Price
+                getSParam(req, "Currency"),     # Currency
+                getSParam(req, "Location")      # Location
             ]
         ]
 
