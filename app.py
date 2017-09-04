@@ -284,6 +284,44 @@ def createBloterConv(req):
 
     return createRow(req)
 
+def getMaxDate(req, field):
+    dateArray = []
+    testDate = None;
+
+    for one in req.get("result").get("parameters").get(field):
+        testDate = one.split('/')
+        for second in testDate:
+            dateArray.add(datetime.datetime.strptime(second, '%Y-%m-%d'))
+
+    for test in dateArray:
+        if testDate is None:
+            testDate = test
+        else:
+            if testDate < test:
+                testDate = test
+
+    return datetime.datetime.strftime(testDate, '%d.%m.%Y')
+
+def getMinDate(req, field):
+    dateArray = []
+    testDate = None;
+
+    for one in req.get("result").get("parameters").get(field):
+        testDate = one.split('/')
+        for second in testDate:
+            dateArray.add(datetime.datetime.strptime(second, '%Y-%m-%d'))
+
+    for test in dateArray:
+        if testDate is None:
+            testDate = test
+        else:
+            if testDate > test:
+                testDate = test
+
+    return datetime.datetime.strftime(testDate, '%d.%m.%Y')
+
+
+
 
 def createRow(req):
     print("Create ROW")
@@ -302,12 +340,13 @@ def createRow(req):
                 datetime.datetime.strftime(datetime.datetime.now(), '%d.%m.%Y'), # Current Date
                 getSParam(req, "buyer"),        # Buyer
                 getSParam(req, "trader"),       # Seller
-                getSParam(req, "StartDate"),    # StartDate
-                getSParam(req, "EndDate"),      # EndDate
+                getMinDate(req, "date-period"),    # StartDate
+                getMaxDate(req, "date-period"),    # EndDate
                 getSParam(req, "quantity"),     # Quantity
                 getSParam(req, "quantityunit"), # QuantityUnit
                 getSParam(req, "price"),        # Price
-                getSParam(req, "currency"),     # Currency
+                #getSParam(req, "currency"),     # Currency
+                "GBP",                          # Currency
                 getSParam(req, "location")      # Location
             ]
         ]
