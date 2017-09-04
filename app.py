@@ -300,15 +300,15 @@ def createRow(req):
             [ 
                 dealNr[:10],                                    # Deal Number
                 datetime.datetime.strftime(datetime.datetime.now(), '%d.%m.%Y'), # Current Date
-                getSParam(req, "Buyer"),        # Buyer
-                getSParam(req, "Seller"),       # Seller
+                getSParam(req, "buyer"),        # Buyer
+                getSParam(req, "trader"),       # Seller
                 getSParam(req, "StartDate"),    # StartDate
                 getSParam(req, "EndDate"),      # EndDate
-                getSParam(req, "Quantity"),     # Quantity
-                getSParam(req, "QuantityUnit"), # QuantityUnit
-                getSParam(req, "Price"),        # Price
-                getSParam(req, "Currency"),     # Currency
-                getSParam(req, "Location")      # Location
+                getSParam(req, "quantity"),     # Quantity
+                getSParam(req, "quantityunit"), # QuantityUnit
+                getSParam(req, "price"),        # Price
+                getSParam(req, "currency"),     # Currency
+                getSParam(req, "location")      # Location
             ]
         ]
 
