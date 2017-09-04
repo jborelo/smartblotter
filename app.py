@@ -298,7 +298,10 @@ def getMaxDate(req, field):
             if result < test:
                 result = test
 
-    return datetime.datetime.strftime(result, '%d.%m.%Y')
+    if result is None:
+        return ""
+    else:
+        return datetime.datetime.strftime(result, '%d.%m.%Y')
 
 def getMinDate(req, field):
     dateArray = getDateArray(req.get("result").get("parameters").get(field))
@@ -314,7 +317,10 @@ def getMinDate(req, field):
             if result > test:
                 result = test
 
-    return datetime.datetime.strftime(result, '%d.%m.%Y')
+    if result is None:
+        return ""
+    else:
+        return datetime.datetime.strftime(result, '%d.%m.%Y')
 
 def getDateArray(oneArray):
     dateArray = []
@@ -334,7 +340,10 @@ def getMaxNumber(req, field):
         if (testOne is None) or testOne < one:
             testOne = one
 
-    return testOne
+    if testOne is None:
+        return ""
+    else:
+        return testOne
 
 def getMinNumber(req, field):
     testOne = None
@@ -343,7 +352,10 @@ def getMinNumber(req, field):
         if (testOne is None) or testOne > one:
             testOne = one
 
-    return testOne
+    if testOne is None:
+        return ""
+    else:
+        return testOne
 
 
 def createRow(req):
