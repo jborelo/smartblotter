@@ -48,7 +48,8 @@ SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
 CLIENT_SECRET_FILE = 'spreadsheet-python.json'
 APPLICATION_NAME = 'GoogleSheet'
 #GOOGLEMAPS_KEY = 'AIzaSyDfz3rsgtrZ3pymjhMyz9CJeLAU7yfR5SI'
-SHEETID = '1k_Nj1JBDcjScQzAIr2ID3zj1xyWsADFqtIaSp5YV9RE'
+#SHEETID = '1k_Nj1JBDcjScQzAIr2ID3zj1xyWsADFqtIaSp5YV9RE'
+SHEETID = '179hCtu13Divv0vMU5J0M-j6clcS9meMmPRyJ9te92xA'
 
 sapurl = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_SET'
 userName = 'AISAP_TEST'
@@ -98,7 +99,6 @@ def processRequest(req):
     akcja = req.get("result").get("action") 
     print(akcja)
     #print(Actions[akcja])
-    
     
     if akcja in Actions:
         res = Actions[akcja](req)
@@ -265,17 +265,7 @@ def prepareHeaders(req):
     value_range_body = {
         "values": [
             [ 
-                "Name", 
-                "SIN", 
-                "Age", 
-                "Medicine", 
-                "Dose", 
-                "OtherMeds", 
-                "AdverseEffectStart", 
-                "StartTime", 
-                "Dissease", 
-                "AdverseEffect",
-                "Remarks"
+                "Deal #", "Deal Date", "Buyer", "Seller", "StartDate", "EndDate", "Quantity", "QuantityUnit", "Price", "Currency", "Location"
             ]
         ]
 
@@ -287,30 +277,38 @@ def prepareHeaders(req):
 
     return returnSpeech(speech)
 
-
-def createRow(req):
-    print("Create ROW")
-
-    createConv(req)
+def createBloterConv(req):
 
     if req.get("result").get("actionIncomplete") == True:
         return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
+    return createRow(req)
+
+
+def createRow(req):
+    print("Create ROW")
+
+    #createConv(req)
+
+    #if req.get("result").get("actionIncomplete") == True:
+    #    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
+
+    dealN = "%f" % time.time()
+
     value_range_body = {
         "values": [
             [ 
-                getContextParam(req, "identity", "Name"), 
-                getContextParam(req, "identity", "SIN"), 
-                getContextParam(req, "identity", "Age"), 
-                getContextParam(req, "identity", "Medicine"), 
-                getContextParam(req, "identity", "Dose"), 
-                getContextParam(req, "identity", "OtherMeds"), 
-                getContextParam(req, "identity", "AdverseEffectStart"), 
-                getContextParam(req, "identity", "StartTime"), 
-                getContextParam(req, "identity", "Dissease"), 
-
-                getContextParam(req, "identity", "AdverseEffect"),
-                getContextParam(req, "identity", "Remarks")
+                dealNr[:10],                                    # Deal Number
+                datetime.datetime.strftime(datetime.datetime.now(), '%d.%m.%Y'), # Current Date
+                getContextParam(req, "bloter", "Buyer"),        # Buyer
+                getContextParam(req, "bloter", "Seller"),       # Seller
+                getContextParam(req, "bloter", "StartDate"),    # StartDate
+                getContextParam(req, "bloter", "EndDate"),      # EndDate
+                getContextParam(req, "bloter", "Quantity"),     # Quantity
+                getContextParam(req, "bloter", "QuantityUnit"), # QuantityUnit
+                getContextParam(req, "bloter", "Price"),        # Price
+                getContextParam(req, "bloter", "Currency"),     # Currency
+                getContextParam(req, "bloter", "Location")      # Location
             ]
         ]
 
@@ -545,12 +543,23 @@ def getTest(req):
     return 0
 
 def defaultIntent(req):
+    
+    if ("resolvedQuery" not in req.get("result")):
+        return returnSpeech("What's up?")
 
-    followupevent = {
-        "name": "extractEntities_event"
-    }
+    if (req.get("result").get("resolvedQuery").upper() == "RECAPS"):
+        followupevent = {
+            "name": "extractEntities_event"
+        }
 
-    speech = "Please provide your message"
+        speech = "Please provide your message"
+
+    else:
+        followupevent = {
+            "name": "conversation_event"
+        }
+
+        speech = "Good morning! I am chatbot for entity recognition."
 
     return returnSpeech(speech, followUpEvent=followupevent)
 
@@ -558,7 +567,9 @@ def defaultIntent(req):
 Actions = {
     'get.licenses.list': getLicense,
     'getTest': getTest,
-    'Display' : defaultIntent
+    'Display' : defaultIntent,
+    'extractEntities_action': createRow,
+    'CreateConv' : createBloterConv
 }
 
 if __name__ == '__main__':
