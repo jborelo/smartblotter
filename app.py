@@ -365,6 +365,12 @@ def createRow(req):
     print("Create ROW")
 
     #createConv(req)
+    if ("resolvedQuery" in req.get("result") and req.get("result").get("resolvedQuery") == "HI"):
+        return returnSpeech("NORMAL CONVERSATION")
+
+    if ("resolvedQuery" in req.get("result") and req.get("result").get("resolvedQuery") == "RECAPS"):
+        return returnSpeech("Get RECAPS")
+
 
     #if req.get("result").get("actionIncomplete") == True:
     #    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
