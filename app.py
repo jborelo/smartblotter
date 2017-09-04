@@ -285,42 +285,65 @@ def createBloterConv(req):
     return createRow(req)
 
 def getMaxDate(req, field):
-    dateArray = []
-    testDate = None;
+    dateArray = getDateArray(req.get("result").get("parameters").get(field))
 
-    for one in req.get("result").get("parameters").get(field):
-        testDate = one.split('/')
-        for second in testDate:
-            dateArray.add(datetime.datetime.strptime(second, '%Y-%m-%d'))
+    result = None
 
     for test in dateArray:
-        if testDate is None:
-            testDate = test
+        print(test)
+        print(type(test))
+        if result is None:
+            result = test
         else:
-            if testDate < test:
-                testDate = test
+            if result < test:
+                result = test
 
-    return datetime.datetime.strftime(testDate, '%d.%m.%Y')
+    return datetime.datetime.strftime(result, '%d.%m.%Y')
 
 def getMinDate(req, field):
-    dateArray = []
-    testDate = None;
+    dateArray = getDateArray(req.get("result").get("parameters").get(field))
 
-    for one in req.get("result").get("parameters").get(field):
-        testDate = one.split('/')
-        for second in testDate:
-            dateArray.add(datetime.datetime.strptime(second, '%Y-%m-%d'))
+    result = None
 
     for test in dateArray:
-        if testDate is None:
-            testDate = test
+        print(test)
+        print(type(test))
+        if result is None:
+            result = test
         else:
-            if testDate > test:
-                testDate = test
+            if result > test:
+                result = test
 
-    return datetime.datetime.strftime(testDate, '%d.%m.%Y')
+    return datetime.datetime.strftime(result, '%d.%m.%Y')
 
+def getDateArray(oneArray):
+    dateArray = []
+    testDate = None
 
+    for one in oneArray:
+        testDate = one.split('/')
+        for second in testDate:
+            dateArray.append(datetime.datetime.strptime(second, '%Y-%m-%d'))
+    
+    return dateArray
+
+def getMaxNumber(req, field):
+    testOne = None
+
+    for one in req.get("result").get("parameters").get(field):
+        if (testOne is None) or testOne < one:
+            testOne = one
+
+    return testOne
+
+def getMinNumber(req, field):
+    testOne = None
+
+    for one in req.get("result").get("parameters").get(field):
+        if (testOne is None) or testOne > one:
+            testOne = one
+
+    return testOne
 
 
 def createRow(req):
@@ -342,9 +365,9 @@ def createRow(req):
                 getSParam(req, "trader"),       # Seller
                 getMinDate(req, "date-period"),    # StartDate
                 getMaxDate(req, "date-period"),    # EndDate
-                getSParam(req, "quantity"),     # Quantity
+                getMaxNumber(req, "number1"),     # Quantity
                 getSParam(req, "quantityunit"), # QuantityUnit
-                getSParam(req, "price"),        # Price
+                getMinNumber(req, "number1"),        # Price
                 #getSParam(req, "currency"),     # Currency
                 "GBP",                          # Currency
                 getSParam(req, "location")      # Location
@@ -357,7 +380,8 @@ def createRow(req):
 
     speech = "Added"
 
-    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
+    #return returnSpeech(req.get("result").get("fulfillment").get("speech"))
+    return returnSpeech(speech)
 
 def createConv(req):
     
