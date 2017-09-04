@@ -99,7 +99,10 @@ def processRequest(req):
     akcja = req.get("result").get("action") 
     print(akcja)
     #print(Actions[akcja])
-    
+
+    if ("resolvedQuery" in req.get("result") and (req.get("result").get("resolvedQuery") == "HI" or req.get("result").get("resolvedQuery") == "RECAPS" )):
+        return defaultIntent(req)
+
     if akcja in Actions:
         res = Actions[akcja](req)
     else:
