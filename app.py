@@ -365,10 +365,10 @@ def createRow(req):
     print("Create ROW")
 
     #createConv(req)
-    if ("resolvedQuery" in req.get("result") and req.get("result").get("resolvedQuery") == "HI"):
+    if ("resolvedQuery" in req.get("result") and (req.get("result").get("resolvedQuery") == "HI" or req.get("result").get("resolvedQuery") == "conversation_event")):
         return returnSpeech("NORMAL CONVERSATION")
 
-    if ("resolvedQuery" in req.get("result") and req.get("result").get("resolvedQuery") == "RECAPS"):
+    if ("resolvedQuery" in req.get("result") and (req.get("result").get("resolvedQuery") == "RECAPS" or req.get("result").get("resolvedQuery") == "extractEntities_event")):
         return returnSpeech("Get RECAPS")
 
 
