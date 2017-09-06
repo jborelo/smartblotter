@@ -96,8 +96,8 @@ def slackEvents():
     res = slackverify(req)
     #res = { "result": "DUPA" }
 
-    #res = json.dumps(res, indent=4)
-    # print(res)
+    res = json.dumps(res, indent=4)
+    #print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
@@ -127,8 +127,9 @@ def processRequest(req):
 
 def slackverify(req):
     print("SlackVerify")
-    result = { "challenge": req.get("challenge") }
+    result = { "challenge" : req.get("challenge") }
     
+    #print(result)
     return result
 
 def get_credentials():
