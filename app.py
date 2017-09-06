@@ -86,6 +86,22 @@ def queryText():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+@app.route('/slackevents', methods=['POST'])
+def queryText():
+    req = request.get_json(silent=True, force=True)
+
+    print("Request:")
+    print(json.dumps(req, indent=4))
+
+    res = slackverify(req)
+    #res = { "result": "DUPA" }
+
+    #res = json.dumps(res, indent=4)
+    # print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
 @app.route('/<string:page_name>')
 def root(page_name):
     print("DUPA")   
@@ -108,6 +124,12 @@ def processRequest(req):
     else:
         return {}
     return res
+
+def slackverify(req):
+    print("SlackVerify")
+
+    
+    return "DUPA"
 
 def get_credentials():
     """Gets valid user credentials from storage.
