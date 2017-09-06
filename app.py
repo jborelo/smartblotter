@@ -127,9 +127,9 @@ def processRequest(req):
 
 def slackverify(req):
     print("SlackVerify")
-
+    result = { "challenge": req.get("challenge") }
     
-    return "DUPA"
+    return result
 
 def get_credentials():
     """Gets valid user credentials from storage.
