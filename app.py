@@ -87,7 +87,7 @@ def queryText():
     return r
 
 @app.route('/slackevents', methods=['POST'])
-def queryText():
+def slackEvents():
     req = request.get_json(silent=True, force=True)
 
     print("Request:")
