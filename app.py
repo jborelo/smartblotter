@@ -127,7 +127,7 @@ def processRequest(req):
 
 def slackverify(req):
     print("SlackVerify")
-    result = { "challenge" : req.get("challenge") }
+    result = { "challenge" : "OK" } #req.get("challenge") }
     
     #print(result)
     return result
