@@ -161,6 +161,8 @@ def slacksafe(req):
 
     qfile = os.path.join(qdir, 'slack.txt')
 
+    print(qfile)
+
     slackMessage = getSlackUsername(req.get("event").get("user")) + "</br>" + req.get("event").get("text").replace('\n', '</br>')
     print(slackMessage)
 
