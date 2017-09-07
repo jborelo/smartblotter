@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link rel="icon" href="images/BP_icon.png">-->
+  <title>BP Blotter | Infosys </title>
+
+  <!-- Bootstrap -->
+  <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="../build/css/custom.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+  <div class="container body" style="height: 100%">
+    <div class="main_container">
+      <!-- sidebar menu  -->
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title text-center" style="border: 0;">
+            <a href="index.html" class="site_title" style="margin:0; padding:0"><img src="images/BP_logo.png" style="height:100%; padding:3px; padding-top: 10px; margin:0"></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="images/login_as_user.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2>User</h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Conversation Dashboard</a></li>
+
+                <!-- Under Construction -->
+
+                <!-- <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="tables.html">Conversatiion Reports</a></li>
+                      <li><a href="tables_dynamic.html">Profit &amp Losses</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="chartjs.html">Chart JS</a></li>
+                      <li><a href="chartjs2.html">Chart JS2</a></li>
+                      <li><a href="morisjs.html">Moris JS</a></li>
+                      <li><a href="echarts.html">ECharts</a></li>
+                      <li><a href="other_charts.html">Other Charts</a></li>
+                    </ul>
+                  </li>   -->
+
+                <!-- Under Construction -->
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+        </div>
+      </div>
+
+      <!-- top navigation -->
+      <div class="top_nav">
+        <div class="nav_menu">
+          <nav>
+            <div class="nav toggle" style="padding: 5px">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- /top navigation -->
+
+      <!-- page content -->
+      <div class="right_col" role="main">
+        <br />
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>BP Blotter Conversation </h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div class="dashboard-widget-content">
+                  <iframe width="100%" height="790px" src="https://console.api.ai/api-client/demo/embedded/c31dea46-1cc3-4fb6-bd3b-1de0bea2f5ff">
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="row">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Conversation structured data <small>Enteties</small></h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                  <p>Actions to be teken after picking up a field</p>
+
+                  <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action" id="table">
+                      <thead>
+                        <tr class="headings">
+                          <th>
+                            <input type="checkbox" id="check-all" class="flat">
+                          </th>
+                          <th class="column-title ">Buyer </th>
+                          <th class="column-title ">Seller </th>
+                          <th class="column-title ">Start Date </th>
+                          <th class="column-title ">End Date </th>
+                          <th class="column-title ">Quantity</th>
+                          <th class="column-title ">Unit </th>
+                          <th class="column-title ">Price </th>
+                          <th class="column-title ">Currency </th>
+                          <th class="column-title last">Location </th>
+                          
+                          <th class="bulk-actions" colspan="7">
+                            <li class="dropdown">
+                              <a class="antoo dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff; font-weight:500;">Actions to be taken ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Edit</a>
+                                </li>
+                                <li><a href="#">Delete</a>
+                                </li>
+                                <li><a href="#">Approve</a>
+                                </li>
+                              </ul>
+                            </li>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody class="text-center">
+                        <tr class="even pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">BP</td>
+                          <td class=" ">01.10.2017</td>
+                          <td class=" ">31.10.2017</td>
+                          <td class=" ">50,000.00</td>
+                          <td class=" ">Therm</td>
+                          <td class=" ">0.47</td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">TTF</td>
+                        </tr>
+                        <tr class="odd pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">BP</td>
+                          <td class=" ">01.10.2017</td>
+                          <td class=" ">31.10.2017</td>
+                          <td class=" ">-</td>
+                          <td class=" ">Spread</td>
+                          <td class=" "></td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">PEG Nord</td>
+                        </tr>
+                        <tr class="even pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">BP</td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">01.10.2017</td>
+                          <td class=" ">31.10.2017</td>
+                          <td class=" ">-</td>
+                          <td class=" ">Spread</td>
+                          <td class=" ">-0.2</td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">PEG Nord</td>
+                        </tr>
+                        <tr class="odd pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">BP</td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">-</td>
+                          <td class=" ">-</td>
+                          <td class=" "> 100,000.00</td>
+                          <td class=" ">Therm</td>
+                          <td class=" ">0.5 </td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">PEG Nord</td>
+                        </tr>
+                        <tr class="even pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">BP</td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">01.10.2017</td>
+                          <td class=" ">31.10.2017</td>
+                          <td class=" ">-</td>
+                          <td class=" ">Therm</td>
+                          <td class=" ">0.47</td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">PEG Nord</td>
+                          </td>
+                        </tr>
+                        <tr class="odd pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">BP</td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">24.08.2017</td>
+                          <td class=" ">24.08.2017 </td>
+                          <td class=" ">-</td>
+                          <td class=" ">Therm</td>
+                          <td class=" ">0.5</td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">NBP</td>
+                        </tr>
+                        <tr class="even pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">BP</td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">01.10.2017</td>
+                          <td class=" ">31.10.2017</td>
+                          <td class=" ">-</td>
+                          <td class=" ">Spread</td>
+                          <td class=" ">-</td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">NBP</td>
+                        </tr>
+                        <tr class="even pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">BP</td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">01.10.2017</td>
+                          <td class=" ">31.10.2017</td>
+                          <td class=" ">-</td>
+                          <td class=" ">Spread</td>
+                          <td class=" ">+1.0</td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">TTF</td>
+                        </tr>
+                        <tr class="even pointer">
+                          <td class="a-center ">
+                            <input type="checkbox" class="flat" name="table_records">
+                          </td>
+                          <td class=" ">BP</td>
+                          <td class=" ">XYZ</td>
+                          <td class=" ">15.10.2017</td>
+                          <td class=" ">18.10.2017</td>
+                          <td class=" ">10,000.00</td>
+                          <td class=" ">Therm</td>
+                          <td class=" ">0.5</td>
+                          <td class=" ">GBP</td>
+                          <td class=" last">NBP</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="row">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Price Change - Graph example</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                  <div id="mainb" style="height:350px;"></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page content -->
+
+      <!-- footer content -->
+      <footer>
+        <div class="pull-right">
+          Rapid Response Team @ Infosys for BP
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      <!-- /footer content -->
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="../vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="../vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="../vendors/nprogress/nprogress.js"></script>
+  <!-- Chart.js -->
+  <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+  <!-- gauge.js -->
+  <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+  <!-- bootstrap-progressbar -->
+  <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+  <!-- iCheck -->
+  <script src="../vendors/iCheck/icheck.min.js"></script>
+  <!-- Skycons -->
+  <script src="../vendors/skycons/skycons.js"></script>
+  <!-- Flot -->
+  <script src="../vendors/Flot/jquery.flot.js"></script>
+  <script src="../vendors/Flot/jquery.flot.pie.js"></script>
+  <script src="../vendors/Flot/jquery.flot.time.js"></script>
+  <script src="../vendors/Flot/jquery.flot.stack.js"></script>
+  <script src="../vendors/Flot/jquery.flot.resize.js"></script>
+  <!-- Flot plugins -->
+  <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+  <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+  <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+  <!-- DateJS -->
+  <script src="../vendors/DateJS/build/date.js"></script>
+  <!-- JQVMap -->
+  <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+  <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+  <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="../vendors/moment/min/moment.min.js"></script>
+  <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- eCharts -->
+  <script src="../vendors/echarts/dist/echarts.min.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="../build/js/custom.min.js"></script>
+
+  
+  <script>
+    function headerClick(e) {
+      console.log(e);
+      $(e.currentTarget).css({
+        color: "red"
+      });
+    }
+
+    function dataClick(e) {
+      console.log(e);
+      if (e.currentTarget.innerHTML != "") return;
+      if (e.currentTarget.contentEditable != null) {
+        $(e.currentTarget).attr("contentEditable", true);
+      } else {
+        $(e.currentTarget).append("<input type='text'>");
+      }
+    }
+    function saveButton() {
+      $("table.table tr td").each(function (td, index) {
+        console.log(td);
+        console.log(index);
+      });
+    }
+ </script>
+
+</body>
+
+</html>
