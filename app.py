@@ -562,7 +562,8 @@ def getLines(rowid):
 
     for line in f:
         if (i >= rowid):
-            result += line[:-1]
+            result += line[:-1] 
+            result += "</br>"
         i += 1
 
     return result, i
