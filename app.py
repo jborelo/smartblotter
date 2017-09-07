@@ -143,7 +143,7 @@ def slacksafe(req):
     
     slackMessage = slackMessage + "</br>"
     
-    slackMessage = slackMessage + str.encode(req.get("event").get("text"), 'utf-8').replace('\n', '</br>')
+    slackMessage = slackMessage + str.decode(req.get("event").get("text"), 'utf-8').replace('\n', '</br>')
 
 
     with open(qfile, "a") as myfile:
@@ -153,7 +153,7 @@ def slacksafe(req):
 
 def getSlackUsername(username):
     # TODO decode SlackUserID to real Username
-    result = str.encode(username, 'utf-8')
+    result = str.decode(username, 'utf-8')
 
     return result 
 
