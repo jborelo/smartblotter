@@ -141,13 +141,7 @@
                             <div class="clerafix"></div>
                             <div class="x_content">
                                 <div class="dashboard-widget-content pre-scrollable" id="appendConversation" style="height:480px">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto amet impedit exercitationem sequi fugit fugiat voluptatem quisquam dignissimos ipsum. Nobis, quaerat. Dolorum facilis ex ullam quis, molestias praesentium autem impedit?
                                     
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro doloremque, tenetur error natus officiis, qui inventore perspiciatis quae quaerat voluptas animi! Maxime cupiditate inventore, aliquid natus rem illum quaerat dignissimos!
-                                    
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima mollitia, accusantium atque, quae veniam cumque esse eos sed, eum ipsum distinctio soluta perferendis quia molestias voluptatem hic sapiente facilis perspiciatis.
-                                    
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum rem delectus obcaecati neque vitae consequuntur animi quibusdam repellendus sint cum, aliquid dolores mollitia labore eum dolorem. Possimus consequatur quasi consequuntur?
 <!--                                    <iframe width="100%" height="380x" src="https://console.api.ai/api-client/demo/embedded/c31dea46-1cc3-4fb6-bd3b-1de0bea2f5ff"></iframe>-->
                                 </div>
                             <div class="x_content">
@@ -499,6 +493,21 @@
     <!-- Custom Theme Scripts -->
     <script src="build/js/custom.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+            $(document).ready(function(){
+                setInterval(function(){
+
+                                $.getJSON('https://bloter-im-message-072017.herokuapp.com/getEvents',
+                                {},
+                                function(data)
+                                {
+                                        if (data.status === "New") {
+                                                $("#appendConversation").append(data.result);
+                                        }
+                                });
+                        },9500);
+            });
+    </script>
 
 
 </body>
