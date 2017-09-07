@@ -130,7 +130,7 @@
                 <div class="row">
                     <!-- ChatRoom -->
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="height:480px">
                             <div class="x_title">
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -140,9 +140,20 @@
                             </div>
                             <div class="clerafix"></div>
                             <div class="x_content">
-                                <div class="dashboard-widget-content">
-                                    <iframe width="100%" height="380x" src="https://console.api.ai/api-client/demo/embedded/c31dea46-1cc3-4fb6-bd3b-1de0bea2f5ff"></iframe>
+                                <div class="dashboard-widget-content pre-scrollable" id="appendConversation" style="height:480px">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto amet impedit exercitationem sequi fugit fugiat voluptatem quisquam dignissimos ipsum. Nobis, quaerat. Dolorum facilis ex ullam quis, molestias praesentium autem impedit?
+                                    
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro doloremque, tenetur error natus officiis, qui inventore perspiciatis quae quaerat voluptas animi! Maxime cupiditate inventore, aliquid natus rem illum quaerat dignissimos!
+                                    
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima mollitia, accusantium atque, quae veniam cumque esse eos sed, eum ipsum distinctio soluta perferendis quia molestias voluptatem hic sapiente facilis perspiciatis.
+                                    
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum rem delectus obcaecati neque vitae consequuntur animi quibusdam repellendus sint cum, aliquid dolores mollitia labore eum dolorem. Possimus consequatur quasi consequuntur?
+<!--                                    <iframe width="100%" height="380x" src="https://console.api.ai/api-client/demo/embedded/c31dea46-1cc3-4fb6-bd3b-1de0bea2f5ff"></iframe>-->
                                 </div>
+                            <div class="x_content">
+                                <input type="text" name="textMe" id="textMe" style="width:75%">
+                                <button class="btn-primary" style="width: 20%">Submit</button>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -210,80 +221,89 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRFw8t2aOmaTwp8DDLk0d3RDfz4F9jDryHbwN6aMxUHf5CRHwOTqs26JWod-Uyu0WdDR5cT85Hw_05w/pubhtml" style="width:100%"></iframe>
+                                    <iframe src="https://docs.google.com/spreadsheets/d/179hCtu13Divv0vMU5J0M-j6clcS9meMmPRyJ9te92xA/edit?usp=sharingwidget=true&amp;headers=false" style="width:100%; height: 500px;"></iframe>
+
+                                    <!--                                    https://docs.google.com/spreadsheets/d/179hCtu13Divv0vMU5J0M-j6clcS9meMmPRyJ9te92xA/edit?usp=sharing 
+                                        
+                                        <iframe src="https://docs.google.com/spreadsheets/d/179hCtu13Divv0vMU5J0M-j6clcS9meMmPRyJ9te92xA/edit?usp=sharingwidget=true&amp;headers=false"></iframe>
+                               
+                                   
+                                   
+                                   
+                                   -->
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="row">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                    </ul>
-                                    <h4>Conversation structured data <small>Enteties</small></h4>
-                                    <div class="clearfix"></div>
-                                </div>
+                    <div class="row">
 
-                                <div class="x_content">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                        </ul>
+                                        <h4>Price Feeds </h4>
+                                        <div class="clearfix"></div>
+                                    </div>
 
-                                    <p>Actions to be teken after picking up a field</p>
+                                    <div class="x_content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped jambo_table bulk_action" id="table">
+                                                <thead>
+                                                    <tr class="headings">
+                                                        <th>
+                                                            <input type="checkbox" id="check-all" class="flat">
+                                                        </th>
+                                                        <th class="column-title">GASOI #</th>
+                                                        <th class="column-title"> Last</th>
+                                                        <th class="column-title ">CHG </th>
+                                                        <th class="column-title ">Spread </th>
+                                                        <th class="column-title ">BQTY </th>
+                                                        <th class="column-title ">BID </th>
+                                                        <th class="column-title ">ASK</th>
+                                                        <th class="column-title ">AQTY </th>
+                                                        <th class="column-title ">VOL </th>
+                                                        <th class="column-title ">HIG</th>
 
-                                    <div class="table-responsive">
-                                        <table class="table table-striped jambo_table bulk_action" id="table">
-                                            <thead>
-                                                <tr class="headings">
-                                                    <th>
-                                                        <input type="checkbox" id="check-all" class="flat">
-                                                    </th>
-                                                    <th class="column-title">Deal #</th>
-                                                    <th class="column-title"> Deal Date</th>
-                                                    <th class="column-title ">Buyer </th>
-                                                    <th class="column-title ">Seller </th>
-                                                    <th class="column-title ">Start Date </th>
-                                                    <th class="column-title ">End Date </th>
-                                                    <th class="column-title ">Quantity</th>
-                                                    <th class="column-title ">Quantity Unit </th>
-                                                    <th class="column-title ">Price </th>
-                                                    <th class="column-title ">Currency </th>
-                                                    <th class="column-title last">Location </th>
-
-                                                    <th class="bulk-actions" colspan="11">
-                                                        <ul class="dropdown">
-                                                            <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="#">Edit</a>
-                                                                </li>
-                                                                <li><a href="#">Delete</a>
-                                                                </li>
-                                                                <li><a href="#">Approve</a>
-                                                                </li>
+                                                        <th class="bulk-actions" colspan="10">
+                                                            <ul class="dropdown">
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    <li><a href="#">Edit</a>
+                                                                    </li>
+                                                                    <li><a href="#">Delete</a>
+                                                                    </li>
+                                                                    <li><a href="#">Approve</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <a class="antoo dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff; font-weight:500;">Actions to be taken ( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
                                                             </ul>
-                                                            <a class="antoo dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff; font-weight:500;">Actions to be taken ( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
-                                                        </ul>
-                                                    </th>
-                                                </tr>
-                                            </thead>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
 
-                                            <tbody class="text-center">
-                                                <tr class="even pointer">
-                                                    <td class="a-center ">
-                                                        <input type="checkbox" class="flat" name="table_records">
-                                                    </td>
-                                                    <td class=" ">1001</td>
-                                                    <td class=" ">23.08.2017</td>
-                                                    <td class=" ">Counterparty B</td>
-                                                    <td class=" ">Counterparty A</td>
-                                                    <td class=" ">01.10.2017</td>
-                                                    <td class=" ">31.10.2017</td>
-                                                    <td class=" ">50,000.00</td>
-                                                    <td class=" ">Therm</td>
-                                                    <td class=" ">0.47</td>
-                                                    <td class=" ">GBP</td>
-                                                    <td class=" last">TTF</td>
-                                                </tr>
+                                                <tbody class="text-center">
+                                                    <tr class="even pointer">
+                                                        <td class="a-center ">
+                                                            <input type="checkbox" class="flat" name="table_records">
+                                                        </td>
+                                                        <td class=" ">DEC-2009</td>
+                                                        <td class=" ">76.81</td>
+                                                        <td class=" ">+1.61</td>
+                                                        <td class="red ">-0.79</td>
+                                                        <td class=" ">1</td>
+                                                        <td class=" ">76.81</td>
+                                                        <td class=" ">76.82</td>
+                                                        <td class=" ">4</td>
+                                                        <td class=" ">102014</td>
+                                                        <td class=" ">77</td>
+
+                                                    </tr>
+                                                    <!--
                                                 <tr class="odd pointer">
                                                     <td class="a-center ">
                                                         <input type="checkbox" class="flat" name="table_records">
@@ -411,14 +431,16 @@
                                                         <td class=" ">GBP</td>
                                                         <td class=" last">NBP</td>
                                                     </tr>
-                                            </tbody>
-                                        </table>
+-->
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
-                    <!--  End of Structured Data -->
+                        <!--  End of Structured Data -->
+                    </div>
                 </div>
             </div>
             <!-- /page content -->
