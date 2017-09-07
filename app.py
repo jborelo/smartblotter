@@ -105,6 +105,17 @@ def slackEvents():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+@app.route('/deleteConv', methods=['GET'])
+def delConv():
+    
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", "slack.txt")
+
+    with open(qdir, "w") as myfile:
+        myfile.write(" ")
+
+    return jsonify(result="Deleted")
+
 @app.route('/getEvents', methods=['GET'])
 def getEvents():
     print("Natalka")
@@ -127,8 +138,8 @@ def getEvents():
 
     return response
 
-@app.route('/<string:page_name>')
-def root(page_name):
+@app.route('/<path:path>')
+def root(path):
     print("DUPA")   
     print(os.path.dirname(os.path.realpath(__file__)))
 
