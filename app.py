@@ -93,7 +93,10 @@ def slackEvents():
     print("SlackEvent:")
     print(json.dumps(req, indent=4))
 
-    res = slackverify(req)
+    if ("challange" in req):
+        res = slackverify(req)
+    else:
+        res = slacksafe(req)
     #res = { "result": "DUPA" }
 
     res = json.dumps(res, indent=4)
@@ -124,6 +127,28 @@ def processRequest(req):
     else:
         return {}
     return res
+
+def slacksafe(req):
+    print("Slack Save")
+    
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    qdir = os.path.join(script_dir, req.get("api_app_id"), req.get("team_id"), req.get("token"))
+
+    if (not os.path.isdir(qdir)):
+        os.makedirs(qdir, mode=0o777, exist_ok=True)
+
+    qfile = os.path.join(qdir, 'slack.txt')
+
+    slackMessage = getSlackUsername(req.get("event").get("user")) + "</br>" + str.encode(req.get("event").get("text").replace('\n', '</br>'), 'utf-8')
+
+    with open(qfile, "a") as myfile:
+        myfile.write(slackMessage)
+
+    return "OK" 
+
+def getSlackUsername(username):
+    # TODO decode SlackUserID to real Username
+    return username
 
 def slackverify(req):
     print("SlackVerify")
@@ -426,6 +451,8 @@ def createRow(req):
 
     #return returnSpeech(req.get("result").get("fulfillment").get("speech"))
     return returnSpeech(speech)
+
+
 
 def createConv(req):
     
