@@ -153,7 +153,7 @@ def slacksafe(req):
 
 def getSlackUsername(username):
     # TODO decode SlackUserID to real Username
-    return str.encode(username, 'utf-8')
+    return str.encode(username, 'utf-8').toString()
 
 def slackverify(req):
     print("SlackVerify")
