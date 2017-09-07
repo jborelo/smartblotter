@@ -549,6 +549,8 @@ def getLines(rowid):
     qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", "slack.txt")
     #                               "api_app_id", req.get("team_id"), req.get("token")
 
+    print(qdir)
+
     f = open(qdir, 'r')
 
     i = 1
