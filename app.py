@@ -105,6 +105,28 @@ def slackEvents():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+@app.route('/getEvents', methods=['GET'])
+def getEvents():
+    print("Natalka")
+#    resLen = 200
+
+    if 'rowid' in request.cookies:
+        rowid = int(request.cookies.get('rowid'))
+    else:
+        rowid = 1
+
+    result, rowid = getLines(rowid)                    # "Natalia jest piekna... %d  " % rowid
+
+    print(result)
+    if len(result) > 5:
+        response = jsonify(result=result, status="New")
+    else:
+        response = jsonify(result="", status="Old")
+
+    response.set_cookie('rowid', value=str(rowid))
+
+    return response
+
 @app.route('/<string:page_name>')
 def root(page_name):
     print("DUPA")   
@@ -519,19 +541,25 @@ def appendRow(req, sheetRange, values):
     return response
 
 def getLines(rowid):
+    #"token": "PY65kzYVuPSsilmUlpmWz0tF",
+    #"team_id": "T4ZSTBWU8",
+    #"api_app_id": "A6XMCTM7A",
+    
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", "slack.txt")
+    #                               "api_app_id", req.get("team_id"), req.get("token")
 
-    f = open('conv.txt', 'r')
+    f = open(qdir, 'r')
 
     i = 1
-
     result = ""
 
     for line in f:
-        if (i == rowid):
-            result = line[:-1]
+        if (i >= rowid):
+            result += line[:-1]
         i += 1
 
-    return result
+    return result, i
 
 
 def getRows(sheetRange):
