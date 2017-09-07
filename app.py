@@ -139,12 +139,7 @@ def slacksafe(req):
 
     qfile = os.path.join(qdir, 'slack.txt')
 
-    slackMessage = getSlackUsername(req.get("event").get("user"))
-    
-    slackMessage = slackMessage + "</br>"
-    
-    slackMessage = slackMessage + str.decode(req.get("event").get("text"), 'utf-8').replace('\n', '</br>')
-
+    slackMessage = getSlackUsername(req.get("event").get("user")) + "</br>" + req.get("event").get("text").replace('\n', '</br>')
 
     with open(qfile, "a") as myfile:
         myfile.write(slackMessage)
@@ -153,9 +148,9 @@ def slacksafe(req):
 
 def getSlackUsername(username):
     # TODO decode SlackUserID to real Username
-    result = str.decode(username, 'utf-8')
 
-    return result 
+
+    return username
 
 def slackverify(req):
     print("SlackVerify")
