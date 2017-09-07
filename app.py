@@ -74,7 +74,7 @@ def webhook():
 def queryText():
     req = request.get_json(silent=True, force=True)
 
-    print("Request:")
+    print("Querytext:")
     print(json.dumps(req, indent=4))
 
     res = processRequest(req)
@@ -90,7 +90,7 @@ def queryText():
 def slackEvents():
     req = request.get_json(silent=True, force=True)
 
-    print("Request:")
+    print("SlackEvent:")
     print(json.dumps(req, indent=4))
 
     res = slackverify(req)
