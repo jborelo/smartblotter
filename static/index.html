@@ -145,6 +145,7 @@
 <!--                                    <iframe width="100%" height="380x" src="https://console.api.ai/api-client/demo/embedded/c31dea46-1cc3-4fb6-bd3b-1de0bea2f5ff"></iframe>-->
                                 </div>
                             <div class="x_content">
+			      <
                                 <input type="text" name="textMe" id="textMe" style="width:75%">
                                 <button class="btn-primary" style="width: 20%">Submit</button>
                             </div>
@@ -503,9 +504,10 @@
                                 {
                                         if (data.status === "New") {
                                                 $("#appendConversation").append(data.result);
+						$('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
                                         }
                                 });
-                        },9500);
+                        },19500);
             });
     </script>
 
