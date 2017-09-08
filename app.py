@@ -95,7 +95,7 @@ def sayToSlack():
 
     res = { "text": "OK" }
     res = json.dumps(res, indent=4)
-    #print(res)
+    print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
@@ -176,6 +176,27 @@ def processRequest(req):
     return res
 
 def slacksafe(req):
+    # SlackEvent:
+    # {
+    #     "token": "PY65kzYVuPSsilmUlpmWz0tF",
+    #     "team_id": "T4ZSTBWU8",
+    #     "api_app_id": "A6XMCTM7A",
+    #     "event": {
+    #         "text": "Co niby super",
+    #         "bot_id": "B6XTMJCDP",
+    #         "type": "message",
+    #         "subtype": "bot_message",
+    #         "ts": "1504890432.000434",
+    #         "channel": "C6Z7QKR8E",
+    #         "event_ts": "1504890432.000434"
+    #     },
+    #     "type": "event_callback",
+    #     "authed_users": [
+    #         "U51AG5P50"
+    #     ],
+    #     "event_id": "Ev70ENM5MK",
+    #     "event_time": 1504890432
+    # }
     print("Slack Save")
     
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -188,7 +209,7 @@ def slacksafe(req):
 
     print(qfile)
 
-    slackMessage = getSlackUsername(req.get("event").get("user")) + "</br>" + req.get("event").get("text").replace('\n', '</br>') + "\n"
+    slackMessage = getSlackUsername(req) + "</br>" + req.get("event").get("text").replace('\n', '</br>') + "\n"
     print(slackMessage)
 
     with open(qfile, "a") as myfile:
@@ -197,11 +218,12 @@ def slacksafe(req):
     print("Dodane")
     return "OK" 
 
-def getSlackUsername(username):
+def getSlackUsername(req):
     # TODO decode SlackUserID to real Username
-
-
-    return username
+    if ("user" in req.get("event")):
+        return req.get("event").get("user")
+        
+    return "BOT"
 
 def slackverify(req):
     print("SlackVerify")
