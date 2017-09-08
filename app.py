@@ -221,9 +221,11 @@ def slacksafe(req):
 def getSlackUsername(req):
     # TODO decode SlackUserID to real Username
     if ("user" in req.get("event")):
-        return req.get("event").get("user")
+        result =  req.get("event").get("user")
+    else:
+        result = "BOT"
         
-    return "BOT"
+    return "<b>" + result + "</b>"
 
 def slackverify(req):
     print("SlackVerify")
