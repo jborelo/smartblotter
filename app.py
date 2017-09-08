@@ -577,6 +577,8 @@ def getLines(rowid):
             result += "</br>"
         i += 1
 
+    print(i + ". " + result)
+
     return result, i
 
 
