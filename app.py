@@ -140,10 +140,10 @@ def getEvents():
 
 @app.route('/<path:path>')
 def root(path):
-    print("DUPA")   
-    print(os.path.dirname(os.path.realpath(__file__)))
+    print(path)   
+    print(os.path.dirname(os.path.realpath(__file__))
 
-    return app.send_static_file(page_name)
+    return app.send_static_file(path)
 
 
 def processRequest(req):
