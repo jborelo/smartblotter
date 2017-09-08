@@ -521,7 +521,7 @@
 		//var jsonData = JSON.stringify({ "text": slackText })
 		var jsonData = { 
 			"text": $("#slackText").val() 
-		}
+		};
 	
 //$.ajax({
 //  type: "POST",
@@ -533,7 +533,7 @@
 //});
 
 		$.post('https://bloter-im-message-072017.herokuapp.com/sayToSlack',
-			{ "text": "text test" },
+			jsonData,
 			'json'
 		).done(function(data) {
 			$("#slackText").val("");
