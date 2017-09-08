@@ -525,7 +525,8 @@
 		
 	//	alert("DUPA")
 		$.post('https://hooks.slack.com/services/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',
-			jsonData
+			jsonData,
+			'json'
 		).done(function(data) {
 			$("#slackText").val("");
 		})
