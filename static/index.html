@@ -524,18 +524,23 @@
 		}
 		
 	//	alert("DUPA")
-
-
-		$.ajax({
-                  data: jsonData,
-                  type: 'post',
-                  url: 'https://hooks.slack.com/services/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',
-                  dataType: 'json',
-		  success: function(data){
+		$.post('https://hooks.slack.com/services/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',
+			jsonData
+		).done(function(data) {
 			$("#slackText").val("");
-                        //alert("SECOND POST JSON DATA");
-                    }   // Success Function 
-		}); // AJAX Call
+		}
+
+
+//		$.ajax({
+//                  data: jsonData,
+//                  type: 'post',
+//                  url: 'https://hooks.slack.com/services/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',
+//                  dataType: 'json',
+//		  success: function(data){
+//			$("#slackText").val("");
+//                        //alert("SECOND POST JSON DATA");
+//                    }   // Success Function 
+//		}); // AJAX Call
 		
 	
             };
