@@ -493,7 +493,7 @@
     <!-- Custom Theme Scripts -->
     <script src="build/js/custom.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
+    <script type="text/javascript">
             $(document).ready(function(){
                 setInterval(function(){
 
@@ -509,14 +509,17 @@
                         },2000);
             });
 
+    </script>
 
+    
+    <script type="text/javascript">
             //$('#slackText').click(slackSend());
-
             function slackSend(){
                 //some code
 
-		var slackText = $("#slackText").val()
-		var jsonData = JSON.stringify({ "text": slackText })
+		//var slackText = $("#slackText").val()
+		//var jsonData = JSON.stringify({ "text": slackText })
+		var jsonData = { "text": $("#slackText").val() }
 		
 	//	alert("DUPA")
 
@@ -525,8 +528,8 @@
                   data: jsonData,
                   type: 'POST',
                   url: 'https://hooks.slack.com/services/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',
-                  contentType: "application/json; charset=utf-8",
-                  dataType: "json",
+                  contentType: 'application/json; charset=utf-8',
+                  dataType: 'json',
 		  success: function(data){
                         alert("SECOND POST JSON DATA");
                     }   // Success Function 
@@ -537,8 +540,8 @@
             };
             
             
-
     </script>
+
 
 
 
