@@ -522,13 +522,13 @@
 
 		$("#slackText").val("")
 
-		//$.ajax({
-                //type: 'POST',
-                //url: 'https://hooks.slack.com/services/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',
-                //contentType: "application/json; charset=utf-8",
-                //dataType: "json",
-                //data:  jsonData
-		//}); // AJAX Call
+		$.ajax({
+                  type: 'POST',
+                  url: 'https://hooks.slack.com/services/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',
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  data:  jsonData
+		}); // AJAX Call
 	
             };
             
