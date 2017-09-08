@@ -520,11 +520,11 @@
 		//var slackText = $("#slackText").val()
 		//var jsonData = JSON.stringify({ "text": slackText })
 		var jsonData = { 
-			text: $("#slackText").val() 
+			"text": $("#slackText").val() 
 		}
 		
 		$.post('https://hooks.slack.com/services/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',
-			jsonData,
+			{ "text": "text test" },
 			'json'
 		).done(function(data) {
 			$("#slackText").val("");
