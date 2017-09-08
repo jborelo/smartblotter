@@ -134,7 +134,7 @@ def getEvents():
     else:
         response = jsonify(result="", status="Old")
 
-    response.set_cookie('rowid', value=str(rowid))
+    response.set_cookie('rowid', value=str(rowid), max_age=5)
 
     return response
 
