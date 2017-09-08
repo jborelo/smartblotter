@@ -129,7 +129,7 @@ def getEvents():
     result, rowid = getLines(rowid)                    # "Natalia jest piekna... %d  " % rowid
 
     print(result)
-    if len(result) > 5:
+    if len(result) > 3:
         response = jsonify(result=result, status="New")
     else:
         response = jsonify(result="", status="Old")
@@ -174,7 +174,7 @@ def slacksafe(req):
 
     print(qfile)
 
-    slackMessage = getSlackUsername(req.get("event").get("user")) + "</br>" + req.get("event").get("text").replace('\n', '</br>')
+    slackMessage = getSlackUsername(req.get("event").get("user")) + "</br>" + req.get("event").get("text").replace('\n', '</br>') + "\n"
     print(slackMessage)
 
     with open(qfile, "a") as myfile:
@@ -573,8 +573,10 @@ def getLines(rowid):
 
     for line in f:
         if (i >= rowid):
-            result += line[:-1] 
+            result += line # [:-1] 
             result += "</br>"
+        
+        print("%d. %s" % (i, result))
         i += 1
 
     print("%d. %s" % (i, result))
