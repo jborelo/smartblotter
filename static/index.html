@@ -519,23 +519,24 @@
 
 		//var slackText = $("#slackText").val()
 		//var jsonData = JSON.stringify({ "text": slackText })
-		var jsonData = { "text": $("#slackText").val() }
+		var jsonData = { 
+			text: $("#slackText").val() 
+		}
 		
 	//	alert("DUPA")
 
 
 		$.ajax({
                   data: jsonData,
-                  type: 'POST',
+                  type: 'post',
                   url: 'https://hooks.slack.com/services/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',
-                  contentType: 'application/json; charset=utf-8',
                   dataType: 'json',
 		  success: function(data){
-                        alert("SECOND POST JSON DATA");
+			$("#slackText").val("");
+                        //alert("SECOND POST JSON DATA");
                     }   // Success Function 
 		}); // AJAX Call
 		
-		$("#slackText").val("")
 	
             };
             
