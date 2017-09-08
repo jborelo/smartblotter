@@ -141,7 +141,7 @@ def getEvents():
 @app.route('/<path:path>')
 def root(path):
     print(path)   
-    print(os.path.dirname(os.path.realpath(__file__))
+    # print(os.path.dirname(os.path.realpath(__file__)))
 
     return app.send_static_file(path)
 
