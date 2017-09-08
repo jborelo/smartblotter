@@ -522,13 +522,23 @@
 		var jsonData = { 
 			"text": $("#slackText").val() 
 		}
-		
-		$.post('https://hooks.slack.com/services/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',
-			{ "text": "text test" },
-			'json'
-		).done(function(data) {
-			$("#slackText").val("");
-		})
+	
+$.ajax({
+  type: "POST",
+  url: "https://hooks.slack.com/services/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",
+  data: jsonData,
+  success: function(data){$("#slackText").val("");},
+  dataType: "json"
+});
+
+
+
+//		$.post('https://hooks.slack.com/services/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',
+//			{ "text": "text test" },
+//			'json'
+//		).done(function(data) {
+//			$("#slackText").val("");
+//		})
 
             };
             
