@@ -134,7 +134,7 @@ def getEvents():
     else:
         response = jsonify(result="", status="Old")
 
-    response.set_cookie('rowid', value=str(rowid), max_age=5)
+    response.set_cookie('rowid', value=str(rowid), max_age=25)
 
     return response
 
@@ -566,7 +566,10 @@ def getLines(rowid):
 
     print(qdir)
 
-    f = open(qdir, 'r')
+    try:
+        f = open(qdir, 'r')
+    except IOError as e:
+        return ""
 
     i = 1
     result = ""
