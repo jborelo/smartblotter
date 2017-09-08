@@ -569,7 +569,7 @@ def getLines(rowid):
     try:
         f = open(qdir, 'r')
     except IOError as e:
-        return ""
+        return "", 0
 
     i = 1
     result = ""
