@@ -146,7 +146,7 @@
                                 </div>
                             	<div class="x_content">
 					<input type="text" name="slackText" id="slackText" style="width:75%" >
-                                	<button id="slackButton" id="slackButton" class="btn-primary" style="width: 20%">Submit</button>
+                                	<button id="slackButton" id="slackButton" class="btn-primary" style="width: 20%" onclick="slackSend()">Submit</button>
                             	</div>
                             </div>
                         </div>
@@ -510,7 +510,7 @@
             });
 
 
-            $('#slackText').click(slackSend());
+            //$('#slackText').click(slackSend());
 
             function slackSend(){
                 //some code
@@ -520,7 +520,7 @@
 		
 	//	alert("DUPA")
 
-		//$("#slackText").val("")
+		$("#slackText").val("")
 
 		//$.ajax({
                 //type: 'POST',
