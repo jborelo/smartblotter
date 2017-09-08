@@ -519,7 +519,6 @@
 
 		var slackText = $("#slackText").val()
 		var jsonData = JSON.stringify({ "text": slackText })
-		//var jsonData = { "text": $("#slackText").val() };
 	
 //$.ajax({
 //  type: "POST",
@@ -530,7 +529,7 @@
 //  dataType: "json"
 //});
 
-		$.post('https://bloter-im-message-072017.herokuapp.com/sayToSlack',
+		$.post('https://hooks.slack.com/services/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",
 			jsonData,
 			'json'
 		).done(function(data) {
