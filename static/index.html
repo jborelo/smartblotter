@@ -517,11 +517,9 @@
             function slackSend(){
                 //some code
 
-		//var slackText = $("#slackText").val()
-		//var jsonData = JSON.stringify({ "text": slackText })
-		var jsonData = { 
-			"text": $("#slackText").val() 
-		};
+		var slackText = $("#slackText").val()
+		var jsonData = JSON.stringify({ "text": slackText })
+		//var jsonData = { "text": $("#slackText").val() };
 	
 //$.ajax({
 //  type: "POST",
