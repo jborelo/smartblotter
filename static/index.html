@@ -527,6 +527,7 @@ $.ajax({
   type: "POST",
   url: "https://hooks.slack.com/services/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",
   data: jsonData,
+  contentType: "application/json; charset=utf-8",
   success: function(data){$("#slackText").val("");},
   dataType: "json"
 });
