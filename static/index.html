@@ -515,8 +515,9 @@
             function slackSend(){
                 //some code
 
-		var slackText = $("#appendConversation").text()
+		var slackText = $("#slackText").val()
 		var jsonData = JSON.stringify({ "text": slackText })
+		$("#slackText").val("")
 
 		$.ajax({
                 type: 'POST',
