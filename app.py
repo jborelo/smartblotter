@@ -86,6 +86,20 @@ def queryText():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+@app.route('/sayToSlack', methods=['POST'])
+def slackEvents():
+    req = request.get_json(silent=True, force=True)
+
+    print("sayToSlack:")
+    print(json.dumps(req, indent=4))
+
+    res = { "text": "OK" }
+    res = json.dumps(res, indent=4)
+    #print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
 @app.route('/slackevents', methods=['POST'])
 def slackEvents():
     req = request.get_json(silent=True, force=True)

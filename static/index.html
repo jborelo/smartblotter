@@ -523,23 +523,21 @@
 			"text": $("#slackText").val() 
 		}
 	
-$.ajax({
-  type: "POST",
-  url: "https://hooks.slack.com/services/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",
-  data: jsonData,
-  contentType: "application/json; charset=utf-8",
-  success: function(data){$("#slackText").val("");},
-  dataType: "json"
-});
+//$.ajax({
+//  type: "POST",
+//  url: "https://hooks.slack.com/services/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",
+//  data: jsonData,
+//  contentType: "application/json; charset=utf-8",
+//  success: function(data){$("#slackText").val("");},
+//  dataType: "json"
+//});
 
-
-
-//		$.post('https://hooks.slack.com/services/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',
-//			{ "text": "text test" },
-//			'json'
-//		).done(function(data) {
-//			$("#slackText").val("");
-//		})
+		$.post('https://bloter-im-message-072017.herokuapp.com/sayToSlack',
+			{ "text": "text test" },
+			'json'
+		).done(function(data) {
+			$("#slackText").val("");
+		})
 
             };
             
