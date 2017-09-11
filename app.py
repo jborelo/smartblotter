@@ -260,7 +260,7 @@ def apiaiAsk(req):
     #print(type(apiai))
     apiai = json.loads(apiai)
     #print(type(apiai))
-    manageApiResult(apiai)
+    manageApiResult(req, apiai)
     return ""
 
 
@@ -378,18 +378,18 @@ def getSParam(req, field):
 
     return result
 
-def manageApiResult(req):
-    query = req.get("result").get("resolvedQuery")
+def manageApiResult(req, apiai):
+    query = apiai.get("result").get("resolvedQuery")
     print("manageApiResult")
     print(query)
-    for context in req.get("result").get("contexts"):
+    for context in apiai.get("result").get("contexts"):
         print(context)
         print(type(context.get("parameters")))
         for key in context.get("parameters"):
             if (query in context.get("parameters").get(key)):
                 #TODO update html on page
                 field = key.split(".")[0]
-                eventSave(req, field, getParam(req, field))
+                eventSave(req, field, getParam(apiai, field))
                 
     return None
 
