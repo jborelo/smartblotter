@@ -94,7 +94,7 @@ def queryText():
     qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
 
     try: 
-        for key in os.walk(qdir):
+        for key in os.listdir(qdir):
             print(key)
             qfile = os.path.join(qdir, key)
             print("###FILE")
