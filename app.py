@@ -169,7 +169,7 @@ def getEvents():
     qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
 
     try: 
-        for key in os.walk(qdir): 
+        for key in os.listdir(qdir): 
             print(key)
             if key in request.cookies:
                 rowid = int(request.cookies.get(key))
@@ -190,7 +190,7 @@ def getEvents():
         response = make_response({"OK": "OK"})
     
     result = json.dumps(result, indent=4)
-
+    print(result)
     response = make_response(result)
     for key in rowsid:
         response.set_cookie(key, value=str(rowsid[key]), max_age=25)
