@@ -179,11 +179,9 @@ def getEvents():
             oneresult, rowid = getLines(key, rowid)
 
             if len(oneresult) > 3:
-                result[key][result] = oneresult
-                result[key][status] = "New"
+                result[key] = { "result": oneresult, "status": "New" }
             else:
-                result[key][result] = "" 
-                result[key][status] = "Old"
+                result[key] = { "result": "", "status": "Old" }
             rowsid[key] = rowid
     except IOError as e:
         print(e)
