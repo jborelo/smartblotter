@@ -89,13 +89,21 @@ def queryText():
     req = request.get_json(silent=True, force=True)
 
     print("Querytext:")
-    print(json.dumps(req, indent=4))
 
-    res = processRequest(req)
-    #res = { "result": "DUPA" }
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
 
-    #res = json.dumps(res, indent=4)
-    # print(res)
+    try: 
+        for key in os.walk(qdir):
+            qfile = os.path.join(qdir, key)
+            print("###FILE")
+            f = open(qfile, 'r')
+            for line in f:
+                print(line)
+    except IOError as e:
+        print(e)
+ 
+    res = { "text": "OK" }
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
@@ -150,20 +158,35 @@ def getEvents():
     print("getEvents")
 #    resLen = 200
 
-    if 'rowid' in request.cookies:
-        rowid = int(request.cookies.get('rowid'))
-    else:
-        rowid = 1
+    result = {}
+    rowsid = {}
 
-    result, rowid = getLines(rowid)                    # "Natalia jest piekna... %d  " % rowid
+    rowid = 1
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
 
-    print(result)
-    if len(result) > 3:
-        response = jsonify(result=result, status="New")
-    else:
-        response = jsonify(result="", status="Old")
+    try: 
+        for key in os.walk(qdir): 
+            if key in request.cookies:
+                rowid = int(request.cookies.get(key))
+            else:
+                rowid = 1
 
-    response.set_cookie('rowid', value=str(rowid), max_age=25)
+            oneresult, rowid = getLines(key, rowid)
+
+            if len(oneresult) > 3:
+                result[key][result] = oneresult
+                result[key][status] = "New"
+            else:
+                result[key][result] = "" 
+                result[key][status] = "Old"
+            rowsid[key] = rowid
+    except IOError as e:
+        print(e)
+    
+    response = make_response(result)
+    for key in rowsid:
+        response.set_cookie(key, value=str(rowsid[key]), max_age=25)
 
     return response
 
@@ -664,13 +687,13 @@ def appendRow(req, sheetRange, values):
     
     return response
 
-def getLines(rowid):
+def getLines(filename, rowid):
     #"token": "PY65kzYVuPSsilmUlpmWz0tF",
     #"team_id": "T4ZSTBWU8",
     #"api_app_id": "A6XMCTM7A",
     
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", "slack.txt")
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", filename)
     #                               "api_app_id", req.get("team_id"), req.get("token")
 
     print(qdir)
