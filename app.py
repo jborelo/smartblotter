@@ -251,6 +251,8 @@ def apiaiAsk(req):
     opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
     apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
+    print("Result APIAI:")
+    print(apiai)
     manageApiResult(apiai)
     return ""
 
@@ -819,8 +821,7 @@ def askPage(opener, data=None, headers=None, method='GET'):
     except IOError as e:
         print (e)
 
-    print(result)
-    return result.get_json(silent=True, force=True)
+    return result
 
 def getTest(req):
 
