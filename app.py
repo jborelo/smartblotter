@@ -55,6 +55,16 @@ sapurl = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_S
 userName = 'AISAP_TEST'
 passWord = 'asyai.1'
 
+siteUpdate = {
+    "location": {
+                "TTF": "TTF",
+                "PEG Nord": "PEG Nord",
+                "Rotterdam": "Rotterdam",
+                "Bonny terminal": "Bonny terminal",
+                "North Sea": "North Sea"
+            }
+        }
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
@@ -111,6 +121,7 @@ def slackEvents():
         res = slackverify(req)
     else:
         res = slacksafe(req)
+        apiaiResult = apiaiAsk(req)
     #res = { "result": "DUPA" }
 
     res = json.dumps(res, indent=4)
@@ -132,7 +143,7 @@ def delConv():
 
 @app.route('/getEvents', methods=['GET'])
 def getEvents():
-    print("Natalka")
+    print("getEvents")
 #    resLen = 200
 
     if 'rowid' in request.cookies:
@@ -198,12 +209,7 @@ def slacksafe(req):
     #     "event_time": 1504890432
     # }
     print("Slack Save")
-    
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    qdir = os.path.join(script_dir, req.get("api_app_id"), req.get("team_id"), req.get("token"))
-
-    if (not os.path.isdir(qdir)):
-        os.makedirs(qdir, mode=0o777, exist_ok=True)
+    qdir = setupDirs(req)
 
     qfile = os.path.join(qdir, 'slack.txt')
 
@@ -217,6 +223,37 @@ def slacksafe(req):
     
     print("Dodane")
     return "OK" 
+
+def setupDirs(req):
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    qdir = os.path.join(script_dir, req.get("api_app_id"), req.get("team_id"), req.get("token"))
+
+    if (not os.path.isdir(qdir)):
+        os.makedirs(qdir, mode=0o777, exist_ok=True)
+
+    return qdir
+
+def getApiaiSessionID(req, opener):
+
+    qfile = os.path.join(setupDirs(req), 'apiAiSessionID.txt')
+
+    if (not os.path.exists(qfile)):
+        #TODO Create file with content - sessionID
+        with open(qfile, "w") as myfile:
+            myfile.write(req.get("token"))
+        #TODO setup session
+        apiai = postForm(opener, setValue(req.get("token"), event="conversation_event"))
+    
+    return req.get("token")
+
+def apiaiAsk(req):
+    # TODO Setup sessionID
+    opener = setSession()
+    sessionID = getApiaiSessionID(req, opener)
+    apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
+    manageApiResult(apiai)
+    return ""
+
 
 def getSlackUsername(req):
     # TODO decode SlackUserID to real Username
@@ -331,6 +368,28 @@ def getSParam(req, field):
         return ""
 
     return result
+
+def manageApiResult(req):
+    query = req.get("result").get("resolvedQuery")
+
+    for context in req.get("result").get("contexts"):
+        for key in context.get("parameters"):
+            if (query in context.get("parameters").get("key")):
+                #TODO update html on page
+                field = key.split(".")[0]
+                eventSave(req, field, getParam(req, field))
+                
+    return None
+
+def eventSave(req, field, value):
+    print("event: %s, %s" % (field, value))
+    if (field in siteUpdate):
+        qfile = os.path.join(setupDirs(req), field)
+        print(qfile)
+        with open(qfile, "a") as myfile:
+            myfile.write(siteUpdate(field, value))
+
+    return ""
 
 def getContextParam(req, name, field):
     for context in req.get("result").get("contexts"):
