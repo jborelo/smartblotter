@@ -95,6 +95,7 @@ def queryText():
 
     try: 
         for key in os.walk(qdir):
+            print(key)
             qfile = os.path.join(qdir, key)
             print("###FILE")
             f = open(qfile, 'r')
