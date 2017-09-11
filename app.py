@@ -31,7 +31,11 @@ from flask import request
 from flask import make_response
 from flask import jsonify
 
+from concurrent.futures import ThreadPoolExecutor
+
 import time
+
+executor = ThreadPoolExecutor(2)
 
 # Flask app should start in global layout
 app = Flask(__name__, static_url_path='/')
@@ -121,7 +125,7 @@ def slackEvents():
         res = slackverify(req)
     else:
         res = slacksafe(req)
-        apiaiResult = apiaiAsk(req)
+        executor.submit(apiaiAsk(req))
     #res = { "result": "DUPA" }
 
     res = json.dumps(res, indent=4)
