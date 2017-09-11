@@ -181,13 +181,14 @@ def getEvents():
                 result[key][result] = "" 
                 result[key][status] = "Old"
             rowsid[key] = rowid
+        response = make_response(result)
+        for key in rowsid:
+            response.set_cookie(key, value=str(rowsid[key]), max_age=25)
+
     except IOError as e:
         print(e)
+        response = make_response({"OK": "OK"})
     
-    response = make_response(result)
-    for key in rowsid:
-        response.set_cookie(key, value=str(rowsid[key]), max_age=25)
-
     return response
 
 @app.route('/<path:path>')
