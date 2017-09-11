@@ -147,7 +147,7 @@ def slackEvents():
 def delConv():
     
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", "slack.txt")
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", "slack")
 
     with open(qdir, "w") as myfile:
         myfile.write(" ")
@@ -168,6 +168,7 @@ def getEvents():
 
     try: 
         for key in os.walk(qdir): 
+            print(key)
             if key in request.cookies:
                 rowid = int(request.cookies.get(key))
             else:
@@ -244,7 +245,7 @@ def slacksafe(req):
     print("Slack Save")
     qdir = setupDirs(req)
 
-    qfile = os.path.join(qdir, 'slack.txt')
+    qfile = os.path.join(qdir, 'slack')
 
     print(qfile)
 
@@ -268,7 +269,7 @@ def setupDirs(req):
 
 def getApiaiSessionID(req, opener):
 
-    qfile = os.path.join(setupDirs(req), 'apiAiSessionID.txt')
+    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
 
     if (not os.path.exists(qfile)):
         #TODO Create file with content - sessionID
