@@ -137,6 +137,7 @@ def slackEvents():
     #res = { "result": "DUPA" }
 
     res = json.dumps(res, indent=4)
+    print("SLACK SAVED")
     print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
