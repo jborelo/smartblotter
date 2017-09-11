@@ -166,10 +166,10 @@ def getEvents():
     rowsid = {}
 
     rowid = 1
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
-
     try: 
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
+
         for key in os.listdir(qdir): 
             print(key)
             if key in request.cookies:
