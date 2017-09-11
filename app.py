@@ -129,7 +129,7 @@ def slackEvents():
     #res = { "result": "DUPA" }
 
     res = json.dumps(res, indent=4)
-    #print(res)
+    print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
@@ -255,11 +255,11 @@ def apiaiAsk(req):
     opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
     apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
-    print("Result APIAI:")
-    print(apiai)
-    print(type(apiai))
+    #print("Result APIAI:")
+    #print(apiai)
+    #print(type(apiai))
     apiai = json.loads(apiai)
-    print(type(apiai))
+    #print(type(apiai))
     manageApiResult(apiai)
     return ""
 
