@@ -53,6 +53,8 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
     $NAV_MENU = $('.nav_menu'),
     $FOOTER = $('footer');
 
+// Candlestick Bar
+
 
 
 // Sidebar
@@ -5858,45 +5860,6 @@ function init_echarts() {
 }
 
 
-
-
-$(document).ready(function () {
-
-    //    init_sparklines();
-    //    init_flot_chart();
-    init_sidebar();
-    //    init_wysiwyg();
-    //    init_InputMask();
-    //    init_JQVmap();
-    //    init_cropper();
-    //    init_knob();
-    //    init_IonRangeSlider();
-    //    init_ColorPicker();
-    //    init_TagsInput();
-    //    init_parsley();
-    //    init_daterangepicker();
-    //    init_daterangepicker_right();
-    //    init_daterangepicker_single_call();
-    //    init_daterangepicker_reservation();
-    //    init_SmartWizard();
-    //    init_EasyPieChart();
-    //    init_charts();
-    //    init_echarts();
-    //    init_morris_charts();
-    //    init_skycons();
-    //    init_select2();
-    //    init_validator();
-    //    init_DataTables();
-    //    init_chart_doughnut();
-    //    init_gauge();
-    //    init_PNotify();
-    //    init_starrr();
-    //    init_calendar();
-    //    init_compose();
-    //    init_CustomNotification();
-    //    init_autosize();
-    //    init_autocomplete();
-
     google.charts.load('current', {
         'packages': ['corechart']
     });
@@ -5912,10 +5875,10 @@ $(document).ready(function () {
                 ['31.01', 2353.76, 2355.76, 2383.76, 2391.82],
                 ['01.02', 2381.82, 2391.82, 2417.02, 2419.02],
                 ['05.02', 2411.15, 2417.02, 2433.39, 2437.42],
-                ['06.02', 2432.68, 2434.48, 2427.7, 2441.73],
+                ['06.02', 2432.68, 2434.48, 2427.07, 2441.73],
                 ['07.02', 2430.69, 2418.53, 2394.22, 2433.89],
-                ['08.02', 2416.62, 2432.45, 2414.4, 2443.03],
-                ['18.02', 2441.91, 2421.56, 2415.43, 2444.8],
+                ['08.02', 2416.62, 2432.45, 2414.48, 2443.03],
+                ['18.02', 2441.91, 2421.56, 2415.43, 2444.48],
                 ['19.02', 2420.26, 2382.91, 2373.53, 2427.07],
                 ['20.02', 2383.49, 2397.18, 2370.61, 2397.94],
                 ['21.02', 2378.82, 2325.95, 2309.17, 2378.82],
@@ -5924,44 +5887,18 @@ $(document).ready(function () {
                 ['26.02', 2289.89, 2340.71, 2313.74, 2293.34],
                 ['27.02', 2297.77, 2313.22, 2292.03, 2324.63],
                 ['28.02', 2308.92, 2366.16, 2322.32, 2365.59],
-//                ['01.03', 2364.54, 2359.51, 2330.86, 2369.65],
-//                ['04.03', 2332.08, 2273.4, 2259.25, 2333.54],
-//                ['05.03', 2274.81, 2326.31, 2270.1, 2328.14],
-//                ['06.03', 2333.61, 2347.18, 2321.6, 2351.44],
-//                ['07.03', 2340.44, 2324.29, 2304.27, 2352.02],
-//                ['08.03', 2326.42, 2318.61, 2314.59, 2333.67],
-//                ['11.03', 2314.68, 2310.59, 2296.58, 2320.96],
-//                ['12.03', 2309.16, 2286.6, 2264.83, 2333.29],
-//                ['13.03', 2282.17, 2263.97, 2253.25, 2286.33],
-//                ['14.03', 2255.77, 2270.28, 2253.31, 2276.22],
-//                ['15.03', 2269.31, 2278.4, 2250, 2312.08],
-//                ['18.03', 2267.29, 2240.02, 2239.21, 2276.05],
-//                ['19.03', 2244.26, 2257.43, 2232.02, 2261.31],
-//                ['20.03', 2257.74, 2317.37, 2257.42, 2317.86],
-//                ['21.03', 2318.21, 2324.24, 2311.6, 2330.81],
-//                ['22.03', 2321.4, 2328.28, 2314.97, 2332],
-//                ['25.03', 2334.74, 2326.72, 2319.91, 2344.89],
 //                ['Mon', 20, 28, 38, 45],
 //                ['Tue', 31, 38, 55, 66],
 //                ['Wed', 50, 55, 77, 80],
 //                ['Thu', 77, 77, 66, 50],
 //                ['Fri', 68, 66, 22, 15]
                 // Treat first row as data as well.
-                // Treat first row as data as well.
             ], true);
 
         var options = {
             legend: 'none',
-            candlestick: {
-                fallingColor: {
-                    strokeWidth: 0,
-                    fill: '#a52714'
-                }, // red
-                risingColor: {
-                    strokeWidth: 0,
-                    fill: '#0f9d58'
-                } // green
-            }
+            height: inherit,
+            colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
         };
 
         var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
@@ -5969,4 +5906,39 @@ $(document).ready(function () {
         chart.draw(data, options);
     }
 
-});
+//    init_chartDraw();  
+//    init_sparklines();
+//    init_flot_chart();
+//    init_sidebar();
+//    init_wysiwyg();
+//    init_InputMask();
+//    init_JQVmap();
+//    init_cropper();
+//    init_knob();
+//    init_IonRangeSlider();
+//    init_ColorPicker();
+//    init_TagsInput();
+//    init_parsley();
+//    init_daterangepicker();
+//    init_daterangepicker_right();
+//    init_daterangepicker_single_call();
+//    init_daterangepicker_reservation();
+//    init_SmartWizard();
+//    init_EasyPieChart();
+//    init_charts();
+//    init_echarts();
+//    init_morris_charts();
+//    init_skycons();
+//    init_select2();
+//    init_validator();
+//    init_DataTables();
+//    init_chart_doughnut();
+//    init_gauge();
+//    init_PNotify();
+//    init_starrr();
+//    init_calendar();
+//    init_compose();
+//    init_CustomNotification();
+//    init_autosize();
+//    init_autocomplete();
+

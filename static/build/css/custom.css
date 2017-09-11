@@ -1,6 +1,6 @@
 
 html , body{
-	
+font-size: 12px;    	
  height:100%;
  
 }
@@ -144,7 +144,7 @@ html , body{
     padding: 0 0 4px 0
 }
 .left_col {
-    background: #2A3F54
+    background: #009933 /* #2A3F54 */
 }
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
@@ -406,7 +406,7 @@ body .container.body .right_col {
     color: #9B59B6
 }
 .green {
-    color: #1ABB9C
+    color: #339966 /* #1ABB9C */
 }
 .aero {
     color: #9CC2CB
@@ -441,8 +441,9 @@ body .container.body .right_col {
     color: #73879C
 }
 .bg-green {
-    background: #1ABB9C !important;
-    border: 1px solid #1ABB9C !important;
+    background: #339966 !important;
+/*    background: #1ABB9C !important; */
+    border: 1px solid #339966 !important;
     color: #fff
 }
 .bg-red {
@@ -470,6 +471,19 @@ body .container.body .right_col {
     border: 1px solid #50C1CF !important;
     color: #fff
 }
+.bg-black {
+    background: #2E2E2E !important;
+    border: 1px solid #2E2E2E !important;
+    color: #fff
+}
+.bg-grey-panel {
+    background: #3D3D3D !important;
+    border: 1px solid #3D3D3D !important;
+    color: #fff
+}
+.bg-pic{
+    background: url(/production/images/MahulContent/Crude_Oil_Brent_grey.png) no-repeat center center;
+}
 .container {
     width: 100%;
     padding: 0
@@ -488,7 +502,7 @@ body .container.body .right_col {
 }
 body {
     color: #73879C;
-    background: #2A3F54;
+    background: #F7F7F7; /*    Green: #009933    Blue: #2A3F54  white: #F7F7F7   */
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -4218,6 +4232,31 @@ ul.notifications {
 
 .mbar_thubnail>img {
     max-width: 100%
+}
+
+
+/*
+ *  STYLE 2 - scrollBar
+ */
+
+#style-2::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-2::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#style-2::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
 }
 
 
