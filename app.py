@@ -254,7 +254,7 @@ def apiaiAsk(req):
     print("Result APIAI:")
     print(apiai)
     print(type(apiai))
-    apiai = json.dumps(apiai, indent=4)
+    apiai = json.loads(apiai)
     print(type(apiai))
     manageApiResult(apiai)
     return ""
