@@ -399,7 +399,7 @@ def eventSave(req, field, value):
         qfile = os.path.join(setupDirs(req), field)
         print(qfile)
         with open(qfile, "a") as myfile:
-            myfile.write(siteUpdate(field, value))
+            myfile.write(siteUpdate.get(field).get(value))
 
     return ""
 
