@@ -804,6 +804,7 @@ def postForm(opener, values):
 
 def askPage(opener, data=None, headers=None, method='GET'):
 
+    url = "https://api.api.ai/v1/query?v=20150910"
     request = urllib.request.Request(url, method=method)
     if headers is not None:
         for key in headers:
