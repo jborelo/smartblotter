@@ -253,7 +253,9 @@ def apiaiAsk(req):
     apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
     print("Result APIAI:")
     print(apiai)
-    apiai = json.dumps(apiai)
+    print(type(apiai))
+    apiai = json.dumps(apiai, indent=4)
+    print(type(apiai))
     manageApiResult(apiai)
     return ""
 
