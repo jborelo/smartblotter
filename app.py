@@ -59,13 +59,14 @@ sapurl = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_S
 userName = 'AISAP_TEST'
 passWord = 'asyai.1'
 
+# WARNING - Queue is created by file, every new record needs \n - end of line
 siteUpdate = {
     "location": {
-                "TTF": "TTF",
-                "PEG Nord": "PEG Nord",
-                "Rotterdam": "Rotterdam",
-                "Bonny terminal": "Bonny terminal",
-                "North Sea": "North Sea"
+                "TTF": "TTF\n",
+                "PEG Nord": "PEG Nord\n",
+                "Rotterdam": "Rotterdam\n",
+                "Bonny terminal": "Bonny terminal\n",
+                "North Sea": "North Sea\n"
             }
         }
 
@@ -420,6 +421,7 @@ def manageApiResult(req, apiai):
                 #TODO update html on page
                 field = key.split(".")[0]
                 eventSave(req, field, getParam(apiai, field))
+                return "OK"
                 
     return None
 
