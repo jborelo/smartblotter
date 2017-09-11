@@ -186,7 +186,7 @@ def getEvents():
             rowsid[key] = rowid
     except IOError as e:
         print(e)
-        response = make_response({"OK": "OK"})
+        result = {"OK": "OK"}
     
     result = json.dumps(result, indent=4)
     print(result)
