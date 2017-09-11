@@ -819,7 +819,7 @@ def askPage(opener, data=None, headers=None, method='GET'):
     except IOError as e:
         print (e)
 
-    return result
+    return result.get_json(silent=True, force=True)
 
 def getTest(req):
 
