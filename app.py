@@ -382,7 +382,7 @@ def manageApiResult(req):
         print(context)
         print(type(context.get("parameters")))
         for key in context.get("parameters"):
-            if (query in context.get("parameters").get("key")):
+            if (query in context.get("parameters").get(key)):
                 #TODO update html on page
                 field = key.split(".")[0]
                 eventSave(req, field, getParam(req, field))
