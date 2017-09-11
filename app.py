@@ -380,7 +380,7 @@ def manageApiResult(req):
     print(query)
     for context in req.get("result").get("contexts"):
         print(context)
-        print(type(context))
+        print(type(context.get("parameters")))
         for key in context.get("parameters"):
             if (query in context.get("parameters").get("key")):
                 #TODO update html on page
