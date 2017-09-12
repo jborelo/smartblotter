@@ -303,14 +303,14 @@ def apiaiAsk(req):
     opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
     apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
-    #print("Result APIAI:")
-    #print(apiai)
+    print("Result APIAI:")
+    print(apiai)
     #print(type(apiai))
     apiai = json.loads(apiai)
     #print(type(apiai))
     manageApiResult(req, apiai)
     botAdvices(apiai)
-    return ""
+    return True
 
 def talkToSlack(speech):
     print("Talk to Slack")
