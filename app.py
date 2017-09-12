@@ -158,6 +158,26 @@ def queryText():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+@app.route('/removeApiAI', methods=['POST'])
+def removeApiAISession():
+    req = request.get_json(silent=True, force=True)
+
+    print("Querytext:")
+
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
+    
+    qfile = os.path.join(qdir, 'apiAiSessionID')
+
+    if (os.path.exists(qfile)):
+        os.remove(qfile)
+        
+    res = { "text": "removedOK" }
+    res = json.dumps(res, indent=4)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
 @app.route('/sayToSlack', methods=['POST'])
 def sayToSlack():
     req = request.get_json(silent=True, force=True)
@@ -385,7 +405,7 @@ def botAdvices(req, slackreq):
 
     if req.get("result").get("actionIncomplete") == False:
         createRow(req)
-        talkToSlack("Added")
+        talkToSlack("Trade Added to Bloter")
         removeApiAISessionID(slackreq)
 
     return ""
