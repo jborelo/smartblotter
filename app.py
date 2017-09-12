@@ -348,7 +348,7 @@ def apiaiAsk(req):
     opener = setSession()
     print("RECAPS")
     
-    if ("recaps" in str.lower(req.get("event").get("text"))):
+    if ("recap" in str.lower(req.get("event").get("text"))):
         sessionID = getApiaiSessionID(req, opener)
 
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
