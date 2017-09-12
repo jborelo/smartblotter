@@ -325,7 +325,7 @@ def removeApiAISessionID(req):
 
 
 def getApiaiSessionID(req, opener):
-
+    print("getApiaiSessionID")
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
 
     if (not os.path.exists(qfile)):
@@ -344,6 +344,8 @@ def apiaiAsk(req):
     
     grepSpeech(req)
     # We are waiting for RECAPS"
+
+    print("RECAPS")
     if ("recaps" in str.lower(req.get("event").get("text"))):
         sessionID = getApiaiSessionID(req, opener)
 
