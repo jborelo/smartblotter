@@ -206,7 +206,7 @@ def delConv():
 
 @app.route('/getEvents', methods=['GET'])
 def getEvents():
-    print("getEvents")
+    #print("getEvents")
 #    resLen = 200
 
     result = {}
@@ -218,7 +218,7 @@ def getEvents():
         qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
 
         for key in os.listdir(qdir): 
-            print(key)
+            #print(key)
             if key in request.cookies:
                 rowid = int(request.cookies.get(key))
             else:
@@ -232,11 +232,11 @@ def getEvents():
                 result[key] = { "result": "", "status": "Old" }
             rowsid[key] = rowid
     except IOError as e:
-        print(e)
+        #print(e)
         result = {"OK": "OK"}
     
     result = json.dumps(result, indent=4)
-    print(result)
+    #print(result)
     response = make_response(result)
     for key in rowsid:
         response.set_cookie(key, value=str(rowsid[key]), max_age=25)
@@ -724,8 +724,8 @@ def createRow(req):
                 getSParam(req, "quantity"),     # Quantity #getMaxNumber(req, "number1"),     # Quantity
                 getSParam(req, "quantityunit"), # QuantityUnit
                 getSParam(req, "price"),        # Price #getMinNumber(req, "number1"),        # Price
-                #getSParam(req, "currency"),     # Currency
-                "GBP",                          # Currency
+                getSParam(req, "currency"),     # Currency
+                #"GBP",                          # Currency
                 getSParam(req, "location")      # Location
             ]
         ]
@@ -812,7 +812,7 @@ def getLines(filename, rowid):
     qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", filename)
     #                               "api_app_id", req.get("team_id"), req.get("token")
 
-    print(qdir)
+    #print(qdir)
 
     try:
         f = open(qdir, 'r')
@@ -827,10 +827,10 @@ def getLines(filename, rowid):
             result += line # [:-1] 
             result += "</br>"
         
-        print("%d. %s" % (i, result))
+        #print("%d. %s" % (i, result))
         i += 1
 
-    print("%d. %s" % (i, result))
+    #print("%d. %s" % (i, result))
 
     return result, i
 
