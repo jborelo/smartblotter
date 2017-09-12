@@ -64,7 +64,7 @@ siteUpdate = {
     "location": {
                 "TTF": "TTF\n",
                 "PEG Nord": "PEG Nord\n",
-                "Rotterdam": "Rotterdam\n",
+                "Rotterdam": '<img class="img-fluid " src="production/images/MahulContent/Electricity_Power_UK.png" alt="" style="height: 27em">\n',
                 "Bonny terminal": "Bonny terminal\n",
                 "North Sea": "North Sea\n"
             }
@@ -193,9 +193,6 @@ def getEvents():
     response = make_response(result)
     for key in rowsid:
         response.set_cookie(key, value=str(rowsid[key]), max_age=25)
-
-    
-
     return response
 
 @app.route('/<path:path>')
