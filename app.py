@@ -88,7 +88,7 @@ siteUpdate = {
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
                 "crude": { 
-                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Crude_Brent_Grey.png" alt="" style="height: 27em">\n',
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Crude_Oil_Brent_grey.png" alt="" style="height: 27em">\n',
                                 'table': '<img class="img-fluid " src="production/images/MahulContent/tblCrude-Brent.png" alt="" >\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/hands_ico.png" alt=""></a> lorem ipsum. Voluptatum ducimus voluptates voluptas?Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
