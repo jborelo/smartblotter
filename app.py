@@ -360,7 +360,7 @@ def getApiaiSessionID(req, opener):
 def apiaiAsk(req): 
     if ("user" not in req.get("event")):
         print("BOT GADA")
-        return ""
+        return True
     
     grepSpeech(req)
     # We are waiting for RECAPS"
@@ -374,7 +374,7 @@ def apiaiAsk(req):
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
 
     if (not os.path.exists(qfile)):
-        return ""
+        return True
 
     # TODO Setup sessionID
     sessionID = getApiaiSessionID(req, opener)
