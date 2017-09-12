@@ -361,7 +361,7 @@
                                 <h5>Price Change</h5>
                             </div>
 -->
-                            <div class="x_content p-0 pr-1 pl-1 text-center">
+                            <div class="x_content p-0 pr-1 pl-1 text-center" id="location">
 
                                 <img class="img-fluid " src="production/images/MahulContent/Crude_Oil_Brent_grey.png" alt="" style="height: 27em">
 
@@ -458,7 +458,9 @@
                                                 $("#appendConversation").append(data.slack.result);
                                                 $('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
                                         }
-
+					if (data.location.status === "New") {
+						$('location').html(data.location.result);
+					}
 
                                 });
                         },20000);
