@@ -68,7 +68,7 @@ siteUpdate = {
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                             },
                 "dutch": { 
-                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_NL_TTF_grey.png" alt="" style="height: 27em">\n',
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Netherlands_TTF_grey.png" alt="" style="height: 27em">\n',
                                 'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Netherlands-TTF.png" alt="" style="height: 27em">\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/strike_ico.png" alt=""></a> Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
