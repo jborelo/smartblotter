@@ -64,32 +64,32 @@ siteUpdate = {
     "location": {
                 "default": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_UK_NBP_grey.png" alt="" style="height: 27em">\n',
-                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-UK-NBP.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-UK-NBP.png" alt="" >\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                             },
                 "dutch": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Netherlands_TTF_grey.png" alt="" style="height: 27em">\n',
-                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Netherlands-TTF.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Netherlands-TTF.png" alt="" >\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/strike_ico.png" alt=""></a> Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
                 "german": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Germany_Gaspool_grey.png" alt="" style="height: 27em">\n',
-                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Germany-Gaspool.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Germany-Gaspool.png" alt="" >\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/city_ico.png" alt=""></a> reprehenderit optio amet ab temporibus asperiores quasi cupiditate.Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
                 "ncg": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Germany_NCG_grey.png" alt="" style="height: 27em">\n',
-                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Germany-NCG.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Germany-NCG.png" alt="" >\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/city_ico.png" alt=""></a> reprehenderit optio amet ab temporibus asperiores quasi cupiditate.Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
                 "gb": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Electricity_Power_UK_grey.png" alt="" style="height: 27em">\n',
-                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblUK-Electricity-Baseload-GRG.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblUK-Electricity-Baseload-GRG.png" >\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
                 "crude": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Crude_Brent_Grey.png" alt="" style="height: 27em">\n',
-                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblCrude-Brent.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblCrude-Brent.png" alt="" >\n',
                                 'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/hands_ico.png" alt=""></a> lorem ipsum. Voluptatum ducimus voluptates voluptas?Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                              },
             }
