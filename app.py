@@ -325,8 +325,7 @@ def apiaiAsk(req):
     apiai = json.loads(apiai)
     #print(type(apiai))
     manageApiResult(req, apiai)
-    botAdvices(apiai)
-    removeApiAISessionID(req)
+    botAdvices(apiai, req)
     return True
 
 def talkToSlack(speech):
@@ -340,13 +339,14 @@ def talkToSlack(speech):
 
     return ""
 
-def botAdvices(req):
+def botAdvices(req, slackreq):
     if (getParam(req, "recaps") == "recaps" and req.get("result").get("actionIncomplete") == True):
         talkToSlack(req.get("result").get("fulfillment").get("speech"))
 
     if req.get("result").get("actionIncomplete") == False:
         createRow(req)
         talkToSlack("Added")
+        removeApiAISessionID(slackreq)
 
     return ""
 
