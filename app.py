@@ -328,11 +328,12 @@ def talkToSlack(speech):
     return ""
 
 def botAdvices(req):
-    if (getParam(req, "recaps") == "recaps"):
+    if (getParam(req, "recaps") == "recaps" and req.get("result").get("actionIncomplete") == True):
         talkToSlack(req.get("result").get("fulfillment").get("speech"))
 
     if req.get("result").get("actionIncomplete") == False:
         createRow(req)
+        talkToSlack("Added")
 
     return ""
 
@@ -657,9 +658,9 @@ def createRow(req):
                 getSParam(req, "trader"),       # Seller
                 getMinDate(req, "date-period"),    # StartDate
                 getMaxDate(req, "date-period"),    # EndDate
-                getMaxNumber(req, "number1"),     # Quantity
+                getSParam(req, "quantity"),     # Quantity #getMaxNumber(req, "number1"),     # Quantity
                 getSParam(req, "quantityunit"), # QuantityUnit
-                getMinNumber(req, "number1"),        # Price
+                getSParam(req, "price"),        # Price #getMinNumber(req, "number1"),        # Price
                 #getSParam(req, "currency"),     # Currency
                 "GBP",                          # Currency
                 getSParam(req, "location")      # Location
