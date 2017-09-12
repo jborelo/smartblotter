@@ -398,12 +398,12 @@
                                 {},
                                 function(data)
                                 {
-                                        if (data.status === "New") {
-                                                $("#appendConversation").append(data.result);
+                                        if (data.slack.status === "New") {
+                                                $("#appendConversation").append(data.slack.result);
                                                 $('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
                                         }
                                 });
-                        },2000);
+                        },4000);
             });
 
     </script>
