@@ -402,7 +402,10 @@
                                                 $("#appendConversation").append(data.slack.result);
                                                 $('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
                                         }
-                                });
+                                        if (data.location.status === "New") {
+                                                $("#location").html(data.location.result);
+                                        }
+                                 });
                         },4000);
             });
 
