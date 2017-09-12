@@ -299,6 +299,11 @@ def getApiaiSessionID(req, opener):
     return req.get("token")
 
 def apiaiAsk(req):
+
+    if ("user" not in req.get("event")):
+        print("BOT GADA")
+        return ""
+
     # TODO Setup sessionID
     opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
