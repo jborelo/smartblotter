@@ -285,6 +285,17 @@ def setupDirs(req):
 
     return qdir
 
+
+def removeApiAISessionID():
+    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
+
+    if (os.path.exists(qfile)):
+        os.remove(qfile)
+        
+    return "Removed"
+
+
+
 def getApiaiSessionID(req, opener):
 
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
@@ -334,6 +345,7 @@ def botAdvices(req):
     if req.get("result").get("actionIncomplete") == False:
         createRow(req)
         talkToSlack("Added")
+        removeApiAISessionID()
 
     return ""
 
