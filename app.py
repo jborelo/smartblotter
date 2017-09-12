@@ -321,9 +321,9 @@ def talkToSlack(speech):
     url = "https://hooks.slack.com/services/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"
     text = { "text": speech }
     data = json.dumps(text).encode('utf8')
-#    request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'})
+    request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'})
 
-#    response = urllib.request.urlopen(request)
+    response = urllib.request.urlopen(request)
 
     return ""
 
