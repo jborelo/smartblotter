@@ -403,17 +403,15 @@
                                 {},
                                 function(data)
                                 {
-                                        if (data.slack.status === "New") {
-                                                $("#appendConversation").append(data.slack.result);
+                                        if (data.status === "New") {
+                                                $("#appendConversation").append(data.result);
                                                 $('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
                                         }
-
                                 });
                         },2000);
             });
 
     </script>
-
 
     <script type="text/javascript">
             //$('#slackText').click(slackSend());
