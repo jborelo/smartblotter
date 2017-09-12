@@ -345,7 +345,9 @@ def apiaiAsk(req):
     grepSpeech(req)
     # We are waiting for RECAPS"
 
+    opener = setSession()
     print("RECAPS")
+    
     if ("recaps" in str.lower(req.get("event").get("text"))):
         sessionID = getApiaiSessionID(req, opener)
 
@@ -355,7 +357,6 @@ def apiaiAsk(req):
         return ""
 
     # TODO Setup sessionID
-    opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
     apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
     print("Result APIAI:")
