@@ -62,33 +62,60 @@ passWord = 'asyai.1'
 # WARNING - Queue is created by file, every new record needs \n - end of line
 siteUpdate = {
     "location": {
-                "TTF": { 
-                                'graph': 'TTF GRAPH\n',
-                                'table': 'TTF table\n',
-                                'news': 'TTF news\n'
+                "default": { 
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_UK_NBP_grey.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-UK-NBP.png" alt="" style="height: 27em">\n',
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
                             },
-                "PEG Nord": { 
-                                'graph': 'PEG Nord graph\n',
-                                'table': 'PEG NORD table\n',
-                                'news': 'PEG NORD news\n'
-                            },
-                "Rotterdam": { 
-                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Electricity_Power_UK.png" alt="" style="height: 27em">\n',
-                                'table': 'Rotterdam table\n',
-                                'news': 'Rotterdam news\n'
-                            },
-                "Bonny terminal": { 
-                                'graph': 'Bonny\n',
-                                'table': 'Bonny table\n',
-                                'news': 'Bonny news\n'
-                            },
-                "North Sea": { 
-                                'graph': 'North Sea\n',
-                                'table': 'NS table\n',
-                                'news': 'NS news\n'
-                            }
+                "dutch": { 
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_NL_TTF_grey.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Netherlands-TTF.png" alt="" style="height: 27em">\n',
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/strike_ico.png" alt=""></a> Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
+                             },
+                "german": { 
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Germany_Gaspool_grey.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Germany-Gaspool.png" alt="" style="height: 27em">\n',
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/city_ico.png" alt=""></a> reprehenderit optio amet ab temporibus asperiores quasi cupiditate.Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
+                             },
+                "ncg": { 
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Germany_NCG_grey.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Germany-NCG.png" alt="" style="height: 27em">\n',
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/city_ico.png" alt=""></a> reprehenderit optio amet ab temporibus asperiores quasi cupiditate.Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
+                             },
+                "gb": { 
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Electricity_Power_UK_grey.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblUK-Electricity-Baseload-GRG.png" alt="" style="height: 27em">\n',
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
+                             },
+                "crude": { 
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Crude_Brent_Grey.png" alt="" style="height: 27em">\n',
+                                'table': '<img class="img-fluid " src="production/images/MahulContent/tblCrude-Brent.png" alt="" style="height: 27em">\n',
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/hands_ico.png" alt=""></a> lorem ipsum. Voluptatum ducimus voluptates voluptas?Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
+                             },
             }
         }
+
+
+keywordsMapping = {
+    "uk gas": "default",
+    "nbp": "default",
+    "dutch gas": "dutch",
+    "netherlands gas": "dutch",
+    "ttf": "dutch",
+    "german gas": "german",
+    "gaspool": "german",
+    "ncg": "ncg",
+    "net connect": "ncg",
+    "uk electricity": "gb",
+    "uk power": "gb",
+    "gb electricity": "gb",
+    "gb power": "gb",
+    "british power": "gb",
+    "crude oil": "crude",
+    "crude": "crude",
+    "oil markets": "crude",
+        }
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -310,9 +337,19 @@ def getApiaiSessionID(req, opener):
     
     return req.get("token")
 
-def apiaiAsk(req):
+def apiaiAsk(req): 
     if ("user" not in req.get("event")):
         print("BOT GADA")
+        return ""
+    
+    grepSpeech(req)
+    # We are waiting for RECAPS"
+    if ("recaps" in str.lower(req.get("event").get("text"))):
+        sessionID = getApiaiSessionID(req, opener)
+
+    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
+
+    if (not os.path.exists(qfile)):
         return ""
 
     # TODO Setup sessionID
@@ -324,7 +361,7 @@ def apiaiAsk(req):
     #print(type(apiai))
     apiai = json.loads(apiai)
     #print(type(apiai))
-    manageApiResult(req, apiai)
+    #manageApiResult(req, apiai)
     botAdvices(apiai, req)
     return True
 
@@ -463,6 +500,16 @@ def getSParam(req, field):
         return ""
 
     return result
+
+def grepSpeech(req):
+    for word in keywordsMapping:
+        if (word in str.lower(req.get("event").get("text"))):
+            print("grepSpeech")
+            field = keywordsMapping.get(word)
+            eventSave(req, "location", field)
+            break
+
+    return None
 
 def manageApiResult(req, apiai):
     query = apiai.get("result").get("resolvedQuery")
