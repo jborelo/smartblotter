@@ -726,7 +726,6 @@ def createRow(req):
     if ("resolvedQuery" in req.get("result") and (req.get("result").get("resolvedQuery") == "RECAPS" or req.get("result").get("resolvedQuery") == "extractEntities_event")):
         return returnSpeech("Get RECAPS")
 
-
     #if req.get("result").get("actionIncomplete") == True:
     #    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
