@@ -62,11 +62,31 @@ passWord = 'asyai.1'
 # WARNING - Queue is created by file, every new record needs \n - end of line
 siteUpdate = {
     "location": {
-                "TTF": "TTF\n",
-                "PEG Nord": "PEG Nord\n",
-                "Rotterdam": '<img class="img-fluid " src="production/images/MahulContent/Electricity_Power_UK.png" alt="" style="height: 27em">\n',
-                "Bonny terminal": "Bonny terminal\n",
-                "North Sea": "North Sea\n"
+                "TTF": { 
+                                'graph': 'TTF GRAPH\n',
+                                'table': 'TTF table\n',
+                                'news': 'TTF news\n'
+                            },
+                "PEG Nord": { 
+                                'graph': 'PEG Nord graph\n',
+                                'table': 'PEG NORD table\n',
+                                'news': 'PEG NORD news\n'
+                            },
+                "Rotterdam": { 
+                                'graph': '<img class="img-fluid " src="production/images/MahulContent/Electricity_Power_UK.png" alt="" style="height: 27em">\n',
+                                'table': 'Rotterdam table\n',
+                                'news': 'Rotterdam news\n'
+                            },
+                "Bonny terminal": { 
+                                'graph': 'Bonny\n',
+                                'table': 'Bonny table\n',
+                                'news': 'Bonny news\n'
+                            },
+                "North Sea": { 
+                                'graph': 'North Sea\n',
+                                'table': 'NS table\n',
+                                'news': 'NS news\n'
+                            }
             }
         }
 
@@ -425,10 +445,12 @@ def manageApiResult(req, apiai):
 def eventSave(req, field, value):
     print("event: %s, %s" % (field, value))
     if (field in siteUpdate):
-        qfile = os.path.join(setupDirs(req), field)
-        print(qfile)
-        with open(qfile, "a") as myfile:
-            myfile.write(siteUpdate.get(field).get(value))
+        content = siteUpdate.get(field).get(value)
+        for key in content:
+            qfile = os.path.join(setupDirs(req), key)
+            print(qfile)
+            with open(qfile, "a") as myfile:
+                myfile.write(content.get(key))
 
     return ""
 
