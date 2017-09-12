@@ -451,9 +451,9 @@ def returnSpeech(speech, displayText=None, contexts=[], followUpEvent={}):
 def getParam(req, field):
     if (field in req.get("result").get("parameters")):
         if (type(req.get("result").get("parameters").get(field)) is list):
-            return ", ".join(req.get("result").get("parameters").get(field))
+            return ", ".join(str(req.get("result").get("parameters").get(field)))
         else:
-            return req.get("result").get("parameters").get(field)
+            return str(req.get("result").get("parameters").get(field))
     return None
 
 def getSParam(req, field):
