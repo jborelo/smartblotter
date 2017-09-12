@@ -154,7 +154,7 @@
                             </div>
 -->
                             <div class="x_content p-0 pr-1 pl-1">
-                                <div class=" pre-scrollable middlebar_content_inner style-2 text-justify p-0 pl-2 pr-2" style="height: 23em">
+                                <div class=" pre-scrollable middlebar_content_inner style-2 text-justify p-0 pl-2 pr-2" style="height: 23em" id="xnews">
                                     <ul class="middlebar_nav p-3">
                                         <li>
                                             <a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
@@ -188,7 +188,7 @@
                                 </div>
 -->
 
-                                <div class="x_content p-0 text-center">
+                                <div class="x_content p-0 text-center" id="xtable" >
                                 
                                     <img class="img-fluid" src="production/images/MahulContent/tblUK-Electricity-Baseload-GRG.png" alt="">
 <!--
@@ -361,7 +361,7 @@
                                 <h5>Price Change</h5>
                             </div>
 -->
-                            <div class="x_content p-0 pr-1 pl-1 text-center" id="location">
+                            <div class="x_content p-0 pr-1 pl-1 text-center" id="xgraph">
 
                                 <img class="img-fluid " src="production/images/MahulContent/Crude_Oil_Brent_grey.png" alt="" style="height: 27em">
 
@@ -402,8 +402,14 @@
                                                 $("#appendConversation").append(data.slack.result);
                                                 $('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
                                         }
-                                        if (data.location.status === "New") {
-                                                $("#location").html(data.location.result);
+                                        if (data.graph.status === "New") {
+                                                $("#xgraph").html(data.graph.result);
+                                        }
+                                         if (data.table.status === "New") {
+                                                $("#xtable").html(data.table.result);
+                                        }
+                                         if (data.news.status === "New") {
+                                                $("#xnews").html(data.news.result);
                                         }
                                  });
                         },4000);
