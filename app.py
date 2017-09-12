@@ -318,6 +318,7 @@ def talkToSlack(speech):
     text = { "text": speech }
     data = json.dumps(text).encode('utf8')
     request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'})
+
     response = urllib.request.urlopen(request)
 
     return ""
