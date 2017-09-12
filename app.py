@@ -309,8 +309,27 @@ def apiaiAsk(req):
     apiai = json.loads(apiai)
     #print(type(apiai))
     manageApiResult(req, apiai)
+    botAdvices(apiai)
     return ""
 
+def talkToSlack(speech):
+    print("Talk to Slack")
+    url = "https://hooks.slack.com/services/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"
+    text = { "text": speech }
+    data = json.dumps(text).encode('utf8')
+    request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'} method='POST')
+    response = urllib.request.urlopen(request)
+
+    return ""
+
+def botAdvices(req):
+    if (getParam(req, "recaps") == "recaps"):
+        talkToSlack(req.get("result").get("fulfillment").get("speech"))
+
+    if req.get("result").get("actionIncomplete") == False:
+        createRow(req)
+
+    return ""
 
 def getSlackUsername(req):
     # TODO decode SlackUserID to real Username
@@ -644,7 +663,7 @@ def createRow(req):
 
     }
 
-    appendRow(req, "Arkusz1!A1", value_range_body)
+    appendRow(req, "Trades to confirm!A5", value_range_body)
 
     speech = "Added"
 
