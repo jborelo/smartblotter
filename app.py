@@ -64,12 +64,12 @@ siteUpdate = {
                 "default": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_UK_NBP_grey.png" alt="" style="height: 27em">\n',
                                 'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-UK-NBP.png" alt="" >\n',
-                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/euro_ico.png" alt=""></a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/UK/flag_ico.png" alt=""></a> <b class="blue">UK Gas Market Rallies on the back of the Oil market</b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/UK/ship_ico.png" alt=""></a> <b class="blue"> Spark spreads narrow as gas market tightens </b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/UK/hands_ico.png" alt=""></a> <b class="blue"> Norway supplies to UK slip </b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/UK/city_ico.png" alt=""></a> <b class="blue"> NBP holding up despite falling power prices </b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li></ul>\n'
                             },
                 "dutch": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Netherlands_TTF_grey.png" alt="" style="height: 27em">\n',
                                 'table': '<img class="img-fluid " src="production/images/MahulContent/tblGas-Netherlands-TTF.png" alt="" >\n',
-                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img src="production/images/strike_ico.png" alt=""></a> Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li></ul>\n'
+                                'news': '<ul class="middlebar_nav p-3"><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/NL/comp_ico.png" alt=""></a> <b class="blue"> Netherlands might be net importer within 3 years, says report </b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/NL/yard_ico.png" alt=""></a> <b class="blue"> TTF prices holding firm </b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/NL/tunel_ico.png" alt=""></a> <b class="blue"> Dutch trading volumes strong </b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li><li><a class="mbar_thubnail" href="#"><img class="pt-3"src="production/images/ico/NL/water_ico.png" alt=""></a> <b class="blue"> Market Moves: TTF Curve Rises </b> <br/> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit...</small></li></ul>\n'
                              },
                 "german": { 
                                 'graph': '<img class="img-fluid " src="production/images/MahulContent/Gas_Germany_Gaspool_grey.png" alt="" style="height: 27em">\n',
@@ -361,18 +361,18 @@ def getApiaiSessionID(req, opener):
     return req.get("token")
 
 def apiaiAsk(req): 
-    if ("user" not in req.get("event")):
+    opener = setSession()
+    
+    if ("recap" in str.lower(req.get("event").get("text"))):
+        sessionID = getApiaiSessionID(req, opener)
+    elif ("user" not in req.get("event")):
         print("BOT GADA")
         return True
     
     grepSpeech(req)
     # We are waiting for RECAPS"
 
-    opener = setSession()
     
-    if ("recap" in str.lower(req.get("event").get("text"))):
-        sessionID = getApiaiSessionID(req, opener)
-
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
 
     if (not os.path.exists(qfile)):
