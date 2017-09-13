@@ -398,11 +398,7 @@
                                 {},
                                 function(data)
                                 {
-                                        if (data.slack.status === "New") {
-                                                $("#appendConversation").append(data.slack.result);
-                                                $('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
-                                        }
-                                        if (data.graph.status === "New") {
+                                       if (data.graph.status === "New") {
                                                 $("#xgraph").html(data.graph.result);
                                         }
                                          if (data.table.status === "New") {
@@ -411,7 +407,11 @@
                                          if (data.news.status === "New") {
                                                 $("#xnews").html(data.news.result);
                                         }
-                                 });
+                                        if (data.slack.status === "New") {
+                                                $("#appendConversation").append(data.slack.result);
+                                                $('#appendConversation').animate({scrollTop: $('#appendConversation').prop("scrollHeight")}, 500);
+                                        }
+                                  });
                         },3000);
             });
 
