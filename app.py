@@ -31,11 +31,11 @@ from flask import request
 from flask import make_response
 from flask import jsonify
 
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 
 import time
 
-executor = ThreadPoolExecutor(2)
+executor = ProcessPoolExecutor(5)
 
 # Flask app should start in global layout
 app = Flask(__name__, static_url_path='/')
@@ -202,18 +202,12 @@ def slackEvents():
     if ("challange" in req):
         res = slackverify(req)
     else:
-        res = slacksafe(req)
-        executor.submit(apiaiAsk(req))
-    #res = { "result": "DUPA" }
-
-    res = json.dumps(res, indent=4)
-    print("SLACK SAVED")
-    #print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    r.headers['X-Slack-No-Retry'] = 1
-    print(r)
-    return r
+        res = executor.submit(slacksafe, req)
+        res2 = executor.submit(apiaiAsk, req)
+        executor.shutdown(wait=False)
+        return res.result()
+        
+    return res
 
 @app.route('/deleteConv', methods=['GET'])
 def delConv():
@@ -310,6 +304,7 @@ def slacksafe(req):
     #     "event_time": 1504890432
     # }
     print("Slack Save")
+    #time.sleep(5)
     qdir = setupDirs(req)
 
     qfile = os.path.join(qdir, 'slack')
@@ -323,7 +318,13 @@ def slacksafe(req):
         myfile.write(slackMessage)
     
     print("Dodane")
-    return "OK" 
+    res = { "result": "OK" }
+    res = json.dumps(res, indent=4)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    r.headers['X-Slack-No-Retry'] = 1
+
+    return r
 
 def setupDirs(req):
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -368,7 +369,6 @@ def apiaiAsk(req):
     # We are waiting for RECAPS"
 
     opener = setSession()
-    print("RECAPS")
     
     if ("recap" in str.lower(req.get("event").get("text"))):
         sessionID = getApiaiSessionID(req, opener)
@@ -378,6 +378,7 @@ def apiaiAsk(req):
     if (not os.path.exists(qfile)):
         return True
 
+    print("RECAPS")
     # TODO Setup sessionID
     sessionID = getApiaiSessionID(req, opener)
     apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
