@@ -35,7 +35,6 @@ from concurrent.futures import ProcessPoolExecutor
 
 import time
 
-executor = ProcessPoolExecutor(5)
 
 # Flask app should start in global layout
 app = Flask(__name__, static_url_path='/')
@@ -196,6 +195,7 @@ def sayToSlack():
 def slackEvents():
     req = request.get_json(silent=True, force=True)
 
+    executor = ProcessPoolExecutor(5)
     print("SlackEvent:")
     print(json.dumps(req, indent=4))
 
