@@ -208,9 +208,11 @@ def slackEvents():
 
     res = json.dumps(res, indent=4)
     print("SLACK SAVED")
-    print(res)
+    #print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
+    r.headers['X-Slack-No-Retry'] = 1
+    print(r)
     return r
 
 @app.route('/deleteConv', methods=['GET'])
