@@ -113,6 +113,7 @@ keywordsMapping = {
     "crude oil": "crude",
     "crude": "crude",
     "oil markets": "crude",
+    "power in uk": "gb",
         }
 
 userNames = {
