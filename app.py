@@ -115,6 +115,11 @@ keywordsMapping = {
     "oil markets": "crude",
         }
 
+userNames = {
+        "U51AG5P50": "Cyrus",
+        "U50KLKUQL": "Mahul" 
+
+        }
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -416,7 +421,10 @@ def botAdvices(req, slackreq):
 def getSlackUsername(req):
     # TODO decode SlackUserID to real Username
     if ("user" in req.get("event")):
-        result =  req.get("event").get("user")
+        if (req.get("event").get("user") in userNames):
+            result = userNames.get(req.get("event").get("user"))
+        else:
+            result =  req.get("event").get("user")
     else:
         result = "BOT"
         
