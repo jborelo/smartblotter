@@ -369,7 +369,7 @@ def getApiaiSessionID(req, opener):
 
 def apiaiAsk(req): 
     opener = setSession()
-    
+    return True
     if ("recap" in str.lower(req.get("event").get("text"))):
         sessionID = getApiaiSessionID(req, opener)
     elif ("user" not in req.get("event")):
