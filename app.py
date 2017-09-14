@@ -415,7 +415,7 @@ def botAdvices(req, slackreq):
 
     if req.get("result").get("actionIncomplete") == False:
         createRow(req)
-        talkToSlack("Trade Added to Bloter")
+        talkToSlack("Got it, thank you")
         removeApiAISessionID(slackreq)
 
     return ""
