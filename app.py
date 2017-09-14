@@ -101,6 +101,7 @@ keywordsMapping = {
     "dutch gas": "dutch",
     "netherlands gas": "dutch",
     "ttf": "dutch",
+    "german": "german",
     "german gas": "german",
     "gaspool": "german",
     "ncg": "ncg",
