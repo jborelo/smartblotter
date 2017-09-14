@@ -95,7 +95,6 @@ siteUpdate = {
         }
 
 
-
 keywordsMapping = {
     "uk gas": "default",
     "nbp": "default",
