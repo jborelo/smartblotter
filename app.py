@@ -378,9 +378,6 @@ def apiaiAsk(req):
     
     grepSpeech(req)
     # We are waiting for RECAPS"
-
-    return True
-    
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
 
     if (not os.path.exists(qfile)):
@@ -396,6 +393,8 @@ def apiaiAsk(req):
     apiai = json.loads(apiai)
     #print(type(apiai))
     #manageApiResult(req, apiai)
+    if ("recap" in str.lower(req.get("event").get("text")) and len(req.get("event").get("text")) < 15):
+        return True    
     botAdvices(apiai, req)
     return True
 
