@@ -395,6 +395,7 @@ def apiaiAsk(req):
     #manageApiResult(req, apiai)
     if ("recap" in str.lower(req.get("event").get("text")) and len(req.get("event").get("text")) < 15):
         print("Ignore botAdvice")
+        talkToSlack("I am Infosys bot and I help to recognize entity")
         return True    
     botAdvices(apiai, req)
     return True
