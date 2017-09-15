@@ -394,6 +394,7 @@ def apiaiAsk(req):
     #print(type(apiai))
     #manageApiResult(req, apiai)
     if ("recap" in str.lower(req.get("event").get("text")) and len(req.get("event").get("text")) < 15):
+        print("Ignore botAdvice")
         return True    
     botAdvices(apiai, req)
     return True
@@ -411,6 +412,7 @@ def talkToSlack(speech):
 
 
 def botAdvices(req, slackreq):
+    print("botAdvice")
     if (getParam(req, "recaps") == "recaps" and req.get("result").get("actionIncomplete") == True):
         talkToSlack(req.get("result").get("fulfillment").get("speech"))
 
