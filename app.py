@@ -354,7 +354,6 @@ def removeApiAISessionID(req):
     return "Removed"
 
 
-
 def getApiaiSessionID(req, opener):
     print("getApiaiSessionID")
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
