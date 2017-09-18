@@ -357,6 +357,7 @@ def removeApiAISessionID(req):
 def getApiaiSessionID(req, opener):
     print("getApiaiSessionID")
     
+    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
     
     if (not os.path.exists(qfile)):
         print("Create APIAISession")
@@ -389,6 +390,7 @@ def apiaiAsk(req):
     qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
 
     if (not os.path.exists(qfile)):
+        print("apiaiAsk Break")
         return True
 
     print("RECAPS")
