@@ -353,49 +353,55 @@ def removeApiAISessionID(req):
         
     return "Removed"
 
-
 def getApiaiSessionID(req, opener):
     print("getApiaiSessionID")
+
+    result = askPage(opener, url="https://api.api.ai/v1/contexts?sessionId=PY65kzYVuPSsilmUlpmWz0tF", headers=setHeaders())
+
+    print(result)
+    if (result is not None and len(result) > 0):
+        return result
+
+    return None
+
+def setApiaiSessionID(req, opener):
+    print("setApiaiSessionID")
+
+    result = askPage(opener, url="https://api.api.ai/v1/contexts?sessionId=PY65kzYVuPSsilmUlpmWz0tF", headers=setHeaders(), method='DELETE')
     
-    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
-    
-    if (not os.path.exists(qfile)):
-        print("Create APIAISession")
-        #TODO Create file with content - sessionID
-        with open(qfile, "w") as myfile:
-            myfile.write(req.get("token"))
-        #TODO setup session
-        event = {
+    event = {
             "name": "conversation_event",
             "data": {
                 "recaps":"recaps"
                 }
             }
 
-        apiai = postForm(opener, setValue(req.get("token"), event=event))
-    
-    return req.get("token")
+    postForm(opener, setValue(req.get("token"), event=event))
+
+    return getApiaiSessionID(req, opener)
 
 def apiaiAsk(req): 
+    sessionID = None
     opener = setSession()
+    sessionID = getApiaiSessionID(req, opener)
+
     if ("recap" in str.lower(req.get("event").get("text"))):
         print("SetSession")
-        sessionID = getApiaiSessionID(req, opener)
+        sessionID = setApiaiSessionID(req, opener)
     elif ("user" not in req.get("event")):
         print("BOT GADA")
         return True
     
     grepSpeech(req)
     # We are waiting for RECAPS"
-    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
-
-    if (not os.path.exists(qfile)):
+   
+    
+    if (sessionID is None):
         print("apiaiAsk Break")
         return True
 
     print("RECAPS")
     # TODO Setup sessionID
-    sessionID = getApiaiSessionID(req, opener)
     apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
     print("Result APIAI:")
     print(apiai)
@@ -978,6 +984,13 @@ def setValue(sessionId, query=None, event=None):
 
     return None
 
+def setHeaders():
+    headers = {
+            'Authorization': 'Bearer 0171fbb8f73e4d77a9bb918fca99ec6d',
+            'Content-Type': 'application/json; charset=utf-8',
+            }
+
+    return headers
 
 def postForm(opener, values):
     print("POST FORM")
@@ -988,20 +1001,15 @@ def postForm(opener, values):
     data = str.encode(json.dumps(values), 'utf-8')
 
     pprint(data)
-    headers = {
-            'Authorization': 'Bearer 0171fbb8f73e4d77a9bb918fca99ec6d',
-            'Content-Type': 'application/json; charset=utf-8',
-            'Content-Length': len(data)
-            }
-
+    headers = setHeaders()
+    headers['Content-Length'] = len(data)
     result = askPage(opener, data=data, headers=headers, method='POST')
     
     return result.read().decode('utf-8')
 
 
-def askPage(opener, data=None, headers=None, method='GET'):
+def askPage(opener, url="https://api.api.ai/v1/query?v=20150910", data=None, headers=None, method='GET'):
 
-    url = "https://api.api.ai/v1/query?v=20150910"
     request = urllib.request.Request(url, method=method)
     if headers is not None:
         for key in headers:
