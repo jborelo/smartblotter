@@ -405,7 +405,7 @@ def apiaiAsk(req):
 
     print("RECAPS")
     # TODO Setup sessionID
-    apiai = postForm(opener, setValue(sessionID, query=req.get("event").get("text")))
+    apiai = postForm(opener, setValue(req.get("token"), query=req.get("event").get("text")))
     print("Result APIAI:")
     print(apiai)
     #print(type(apiai))
