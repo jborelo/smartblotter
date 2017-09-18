@@ -381,6 +381,7 @@ def setApiaiSessionID(req, opener):
     return getApiaiSessionID(req, opener)
 
 def apiaiAsk(req): 
+    print("apiaiAsk")
     sessionID = None
     opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
