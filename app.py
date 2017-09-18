@@ -383,6 +383,16 @@ def setApiaiSessionID(req, opener):
 
     return getApiaiSessionID(req, opener)
 
+def postApiAI(opener, req):
+
+    while(True):
+        result = postForm(opener, setValue(req.get("token"), query=req.get("event").get("text")))
+        result = json.loads(result)
+        if (result.get("status").get("code") == 200):
+            break
+         
+    return result
+
 def apiaiAsk(req): 
     print("apiaiAsk")
     opener = setSession()
@@ -397,7 +407,6 @@ def apiaiAsk(req):
     
     grepSpeech(req)
     # We are waiting for RECAPS"
-   
     
     if (sessionID is None):
         print("apiaiAsk Break")
@@ -405,11 +414,10 @@ def apiaiAsk(req):
 
     print("RECAPS")
     # TODO Setup sessionID
-    apiai = postForm(opener, setValue(req.get("token"), query=req.get("event").get("text")))
+    apiai = postApiAI(opener, req) 
     print("Result APIAI:")
     print(apiai)
     #print(type(apiai))
-    apiai = json.loads(apiai)
     #print(type(apiai))
     #manageApiResult(req, apiai)
     if ("recap" in str.lower(req.get("event").get("text")) and len(req.get("event").get("text")) < 15):
