@@ -361,6 +361,7 @@ def getApiaiSessionID(req, opener):
     result = result.read().decode('utf-8')
 
     print(result)
+    print(len(result))
     if (result is not None and len(result) > 0):
         return result
 
