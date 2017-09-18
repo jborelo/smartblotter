@@ -359,6 +359,7 @@ def getApiaiSessionID(req, opener):
     
     
     if (not os.path.exists(qfile)):
+        print("Create APIAISession")
         #TODO Create file with content - sessionID
         with open(qfile, "w") as myfile:
             myfile.write(req.get("token"))
