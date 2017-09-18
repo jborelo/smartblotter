@@ -52,7 +52,8 @@ CLIENT_SECRET_FILE = 'spreadsheet-python.json'
 APPLICATION_NAME = 'GoogleSheet'
 #GOOGLEMAPS_KEY = 'AIzaSyDfz3rsgtrZ3pymjhMyz9CJeLAU7yfR5SI'
 #SHEETID = '1k_Nj1JBDcjScQzAIr2ID3zj1xyWsADFqtIaSp5YV9RE'
-SHEETID = '179hCtu13Divv0vMU5J0M-j6clcS9meMmPRyJ9te92xA'
+SourceSheetID = '179hCtu13Divv0vMU5J0M-j6clcS9meMmPRyJ9te92xA'
+DestSheetID = '1loP91vw5QiQSXLeDePXddbQKO0xFIN3bzyamiE0AaJ0'
 
 sapurl = 'http://80.241.97.49:50000/sap/opu/odata/LMC/OLI_MOBILE_SRV/CZAT_TEST_SET'
 userName = 'AISAP_TEST'
@@ -216,6 +217,27 @@ def slackEvents():
         return res.result()
         
     return res
+
+@app.route('/copyConfirm', methods=['GET'])
+def copyConfirm():
+    
+    result = getRows(SourceSheetID, "Trades to confirm!A5:L")
+
+    #print(result)
+    i = 4
+    for row in result:
+        i += 1
+        if len(row) > 11 and row[11] == "Confirmed":
+            sheetRange = "Trades to Confirm!L" + str(i)
+            value = { "values": [ [ "Submitted" ] ] }
+
+            updateRow(SourceSheetID, sheetRange, value)
+            print(sheetRange)
+            print(row)
+            valueAdd = { "values": [ row ] }
+            appendRow("", DestSheetID, "Deal List!A2", valueAdd)
+
+    return jsonify(result="Copied")
 
 @app.route('/deleteConv', methods=['GET'])
 def delConv():
@@ -678,7 +700,7 @@ def prepareHeaders(req):
 
     }
 
-    appendRow(req, value_range_body)
+    appendRow(req, SourceSheetID, "Trades to confirm!A4", value_range_body)
 
     speech = "Headers are created"
 
@@ -800,7 +822,7 @@ def createRow(req):
 
     }
 
-    appendRow(req, "Trades to confirm!A5", value_range_body)
+    appendRow(req, SourceSheetID, "Trades to confirm!A5", value_range_body)
 
     speech = "Added"
 
@@ -835,12 +857,11 @@ def createConversation(req):
 
     }
 
-    appendRow(req, "Arkusz2!A1", value_range_body)
+    appendRow(req, SourceSheetID, "Arkusz2!A1", value_range_body)
 
     return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
-
-def appendRow(req, sheetRange, values):
+def appendRow(req, sheetid, sheetRange, values):
     print("Append ROW")
 
     service = gmailLogin()
@@ -866,9 +887,32 @@ def appendRow(req, sheetRange, values):
     #  "Remarks": "all",
     #  "StartTime": "10:00:00"
 
-    request = service.spreadsheets().values().append(spreadsheetId=SHEETID, range=range_, valueInputOption=value_input_option, insertDataOption=insert_data_option, body=values)
+    request = service.spreadsheets().values().append(spreadsheetId=sheetid, range=range_, valueInputOption=value_input_option, insertDataOption=insert_data_option, body=values)
     response = request.execute()
     
+    return response
+
+
+def updateRow(sheetid, sheetRange, values):
+    print("Update ROW")
+
+    service = gmailLogin()
+
+    # The A1 notation of a range to search for a logical table of data.
+    # Values will be appended after the last row of the table.
+    range_ = sheetRange  # TODO: Update placeholder value.
+
+    # How the input data should be interpreted.
+    value_input_option = 'RAW'  # TODO: Update placeholder value.
+
+    # How the input data should be inserted.
+    #insert_data_option = 'INSERT_ROWS'  # TODO: Update placeholder value.
+
+    #request = service.spreadsheets().values().append(spreadsheetId=sheetid, range=range_, valueInputOption=value_input_option, insertDataOption=insert_data_option, body=values)
+    #response = request.execute()
+    request = service.spreadsheets().values().update(spreadsheetId=sheetid, range=range_, valueInputOption=value_input_option, body=values)
+    response = request.execute()
+ 
     return response
 
 def getLines(filename, rowid):
@@ -903,7 +947,7 @@ def getLines(filename, rowid):
     return result, i
 
 
-def getRows(sheetRange):
+def getRows(sheetid, sheetRange):
     print("Get ROWs" + sheetRange)
 
     service = gmailLogin()
@@ -923,11 +967,11 @@ def getRows(sheetRange):
     # The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
     #date_time_render_option = ''  # TODO: Update placeholder value.
 
-    request = service.spreadsheets().values().get(spreadsheetId=SHEETID, range=range_, valueRenderOption=value_render_option) #, dateTimeRenderOption=date_time_render_option)
+    request = service.spreadsheets().values().get(spreadsheetId=sheetid, range=range_, valueRenderOption=value_render_option) #, dateTimeRenderOption=date_time_render_option)
     response = request.execute()
     
     if ('values' in response):
-        return response.get("values")[0][0] + " " + response.get("values")[0][1]
+        return response.get("values")
     else:
         return ""
 
