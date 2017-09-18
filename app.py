@@ -441,6 +441,7 @@ def talkToSlack(speech):
 
 def botAdvices(req, slackreq):
     print("botAdvice")
+    print(req)
     if (getParam(req, "recaps") == "recaps" and req.get("result").get("actionIncomplete") == True):
         talkToSlack(req.get("result").get("fulfillment").get("speech"))
 
