@@ -362,7 +362,7 @@ def getApiaiSessionID(req, opener):
 
     print(result)
     print(len(result))
-    if (result is not None and len(result) > 0):
+    if (result is not None and len(result) > 5):
         return result
 
     return None
