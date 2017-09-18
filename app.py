@@ -358,6 +358,8 @@ def getApiaiSessionID(req, opener):
 
     result = askPage(opener, url="https://api.api.ai/v1/contexts?sessionId=PY65kzYVuPSsilmUlpmWz0tF", headers=setHeaders())
 
+    result = result.read().decode('utf-8')
+
     print(result)
     if (result is not None and len(result) > 0):
         return result
@@ -382,7 +384,6 @@ def setApiaiSessionID(req, opener):
 
 def apiaiAsk(req): 
     print("apiaiAsk")
-    sessionID = None
     opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
 
