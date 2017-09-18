@@ -356,14 +356,21 @@ def removeApiAISessionID(req):
 
 def getApiaiSessionID(req, opener):
     print("getApiaiSessionID")
-    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
-
+    
+    
     if (not os.path.exists(qfile)):
         #TODO Create file with content - sessionID
         with open(qfile, "w") as myfile:
             myfile.write(req.get("token"))
         #TODO setup session
-        apiai = postForm(opener, setValue(req.get("token"), event="conversation_event"))
+        event = {
+            "name": "conversation_event",
+            "data": {
+                "recaps":"recaps"
+                }
+            }
+
+        apiai = postForm(opener, setValue(req.get("token"), event=event))
     
     return req.get("token")
 
@@ -962,7 +969,7 @@ def setValue(sessionId, query=None, event=None):
         return values
     
     if event is not None:
-        values["event"] = { "name": event }
+        values["event"] = event
         return values
 
     return None
