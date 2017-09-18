@@ -347,6 +347,10 @@
                             <div class="x_content p-0">
                                 <iframe class="p-0" src="https://docs.google.com/spreadsheets/d/179hCtu13Divv0vMU5J0M-j6clcS9meMmPRyJ9te92xA/edit?rm=minimal&widget=false&chrome=false&ampheaders=false&amp" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="width:100%; height: 25em;"></iframe>
                             </div>
+                            <div class="x_content w-100 text-center p-0">
+                                    <button class="col-3 btn btn-primary bg-black p-1" role="button" id="btnSubmitRecap" onclick="copySheet()">Submit</button>
+                            </div>
+ 
                         </div>
                     </div>
 
@@ -417,6 +421,24 @@
             });
 
     </script>
+
+    <script>
+            //$('#slackText').click(slackSend());
+            function copySheet(){
+
+                $.getJSON('https://bloter-im-message-072017.herokuapp.com/copyConfirm',
+                {},
+                                function(data)
+                                {
+					alert("Submitted");
+                                  });
+
+            };
+
+
+    </script>
+
+
 
     <script>
             //$('#slackText').click(slackSend());
