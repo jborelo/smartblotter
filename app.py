@@ -384,13 +384,15 @@ def setApiaiSessionID(req, opener):
     return getApiaiSessionID(req, opener)
 
 def postApiAI(opener, req):
-
+    print("postAPIAI")
     while(True):
         result = postForm(opener, setValue(req.get("token"), query=req.get("event").get("text")))
         result = json.loads(result)
+        print(result)
         if (result.get("status").get("code") == 200):
             break
          
+    print("Finish postAPIAI")
     return result
 
 def apiaiAsk(req): 
