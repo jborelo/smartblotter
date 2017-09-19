@@ -456,6 +456,11 @@ body .container.body .right_col {
     border: 1px solid #3498DB !important;
     color: #fff
 }
+.bg-blue-nav {
+    background: #3c8dbc !important;
+    border: 1px solid #3c8dbc !important;
+    color: #fff
+}
 .bg-orange {
     background: #F39C12 !important;
     border: 1px solid #F39C12 !important;
