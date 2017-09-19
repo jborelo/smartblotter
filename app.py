@@ -188,7 +188,7 @@ def slackEvents():
     print("SlackEvent:")
     print(json.dumps(req, indent=4))
 
-    if ("challange" in req):
+    if ("challenge" in req):
         res = slackverify(req)
     else:
         res = executor.submit(slacksafe, req)
@@ -454,10 +454,15 @@ def getSlackUsername(req):
 
 def slackverify(req):
     print("SlackVerify")
-    result = { "challenge" : "OK" } #req.get("challenge") }
-    
+    result = { "challenge" : req.get("challenge") }
+    res = json.dumps(result, indent=4)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    r.headers['X-Slack-No-Retry'] = 1
+
+ 
     #print(result)
-    return result
+    return r
 
 def get_credentials():
     """Gets valid user credentials from storage.
