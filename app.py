@@ -166,26 +166,6 @@ def queryText():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-@app.route('/removeApiAI', methods=['POST'])
-def removeApiAISession():
-    req = request.get_json(silent=True, force=True)
-
-    print("Querytext:")
-
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
-    
-    qfile = os.path.join(qdir, 'apiAiSessionID')
-
-    if (os.path.exists(qfile)):
-        os.remove(qfile)
-        
-    res = { "text": "removedOK" }
-    res = json.dumps(res, indent=4)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
-
 @app.route('/sayToSlack', methods=['POST'])
 def sayToSlack():
     req = request.get_json(silent=True, force=True)
@@ -238,17 +218,6 @@ def copyConfirm():
             appendRow("", DestSheetID, "Deal List!A2", valueAdd)
 
     return jsonify(result="Copied")
-
-@app.route('/deleteConv', methods=['GET'])
-def delConv():
-    
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF", "slack")
-
-    with open(qdir, "w") as myfile:
-        myfile.write(" ")
-
-    return jsonify(result="Deleted")
 
 @app.route('/getEvents', methods=['GET'])
 def getEvents():
@@ -358,27 +327,19 @@ def slacksafe(req):
 
 def setupDirs(req):
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    qdir = os.path.join(script_dir, req.get("api_app_id"), req.get("team_id"), req.get("token"))
+    #qdir = os.path.join(script_dir, req.get("api_app_id"), req.get("team_id"), req.get("token"))
+    qdir = os.path.join(script_dir, "A6XMCTM7A", "T4ZSTBWU8", "PY65kzYVuPSsilmUlpmWz0tF")
 
     if (not os.path.isdir(qdir)):
         os.makedirs(qdir, mode=0o777, exist_ok=True)
 
     return qdir
 
-
-def removeApiAISessionID(req):
-    print("Remove")
-    qfile = os.path.join(setupDirs(req), 'apiAiSessionID')
-
-    if (os.path.exists(qfile)):
-        os.remove(qfile)
-        
-    return "Removed"
-
 def getApiaiSessionID(req, opener):
     print("getApiaiSessionID")
 
-    result = askPage(opener, url="https://api.api.ai/v1/contexts?sessionId=PY65kzYVuPSsilmUlpmWz0tF", headers=setHeaders())
+    url = "https://api.api.ai/v1/contexts?sessionId=" + req.get("token")
+    result = askPage(opener, url=url, headers=setHeaders())
 
     result = result.read().decode('utf-8')
 
@@ -392,7 +353,8 @@ def getApiaiSessionID(req, opener):
 def setApiaiSessionID(req, opener):
     print("setApiaiSessionID")
 
-    result = askPage(opener, url="https://api.api.ai/v1/contexts?sessionId=PY65kzYVuPSsilmUlpmWz0tF", headers=setHeaders(), method='DELETE')
+    url = "https://api.api.ai/v1/contexts?sessionId=" + req.get("token")
+    result = askPage(opener, url=url, headers=setHeaders(), method='DELETE')
     
     event = {
             "name": "conversation_event",
@@ -455,7 +417,8 @@ def apiaiAsk(req):
 
 def talkToSlack(speech):
     print("Talk to Slack")
-    url = "https://hooks.slack.com/services/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"
+    #url = "https://hooks.slack.com/services/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"
+    url  = "https://hooks.slack.com/services/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"
     text = { "text": speech }
     data = json.dumps(text).encode('utf8')
     request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'})
@@ -474,7 +437,6 @@ def botAdvices(req, slackreq):
     if req.get("result").get("actionIncomplete") == False:
         createRow(req)
         talkToSlack("Got it, thank you")
-        removeApiAISessionID(slackreq)
 
     return ""
 
@@ -822,7 +784,7 @@ def createRow(req):
 
     }
 
-    appendRow(req, SourceSheetID, "Trades to confirm!A5", value_range_body)
+    appendRow(SourceSheetID, "Trades to confirm!A5", value_range_body)
 
     speech = "Added"
 
@@ -857,11 +819,11 @@ def createConversation(req):
 
     }
 
-    appendRow(req, SourceSheetID, "Arkusz2!A1", value_range_body)
+    appendRow(SourceSheetID, "Arkusz2!A1", value_range_body)
 
     return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
-def appendRow(req, sheetid, sheetRange, values):
+def appendRow(sheetid, sheetRange, values):
     print("Append ROW")
 
     service = gmailLogin()
