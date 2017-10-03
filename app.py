@@ -125,6 +125,7 @@ userNames = {
 
         }
 
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
@@ -139,6 +140,7 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
+
 
 @app.route('/querytext', methods=['POST'])
 def queryText():
@@ -166,6 +168,8 @@ def queryText():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+
+#-------------  piszemy dl slacka (NOT USED !!)----------------
 @app.route('/sayToSlack', methods=['POST'])
 def sayToSlack():
     req = request.get_json(silent=True, force=True)
@@ -180,9 +184,16 @@ def sayToSlack():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+
+#-------------- Slack wysyla eventy tutaj -------------
 @app.route('/slackevents', methods=['POST'])
 def slackEvents():
     req = request.get_json(silent=True, force=True)
+
+
+# event od slacka idzie do  kolejek (plikow) i zwracamy 200
+# startowany jest proces (thread)  do  rozmowy z APi.AI
+
 
     executor = ProcessPoolExecutor(5)
     print("SlackEvent:")
@@ -197,6 +208,7 @@ def slackEvents():
         return res.result()
         
     return res
+
 
 @app.route('/copyConfirm', methods=['GET'])
 def copyConfirm():
@@ -219,6 +231,8 @@ def copyConfirm():
 
     return jsonify(result="Copied")
 
+
+# ------ called by index.html to return events -----
 @app.route('/getEvents', methods=['GET'])
 def getEvents():
     #print("getEvents")
@@ -381,6 +395,8 @@ def postApiAI(opener, req):
     print("Finish postAPIAI")
     return result
 
+
+# ---------- calls API.AI ------------------
 def apiaiAsk(req): 
     print("apiaiAsk")
     opener = setSession()
@@ -415,10 +431,13 @@ def apiaiAsk(req):
     botAdvices(apiai, req)
     return True
 
+
+# ------    wysylanie REST do SLACKA  --------
 def talkToSlack(speech):
     print("Talk to Slack")
     #url = "https://hooks.slack.com/services/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"
-    url  = "https://hooks.slack.com/services/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"
+    #url  = "https://hooks.slack.com/services/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"
+    url = "https://hooks.slack.com/services/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"  # url dl GClouda
     text = { "text": speech }
     data = json.dumps(text).encode('utf8')
     request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'})
@@ -428,6 +447,7 @@ def talkToSlack(speech):
     return ""
 
 
+#------------------------------------------------------------------------------------------------------
 def botAdvices(req, slackreq):
     print("botAdvice")
     print(req)
@@ -1013,7 +1033,7 @@ def setValue(sessionId, query=None, event=None):
 
 def setHeaders():
     headers = {
-            'Authorization': 'Bearer 0171fbb8f73e4d77a9bb918fca99ec6d',
+            'Authorization': 'Bearer f6c6b3478a5e43afb16dcb91b2778d13',
             'Content-Type': 'application/json; charset=utf-8',
             }
 
@@ -1092,7 +1112,7 @@ Actions = {
 }
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+    port = int(os.getenv('PORT', 80))
 
     print("Starting app on port %d" % port)
     print(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%dT%H:%M:%SZ')),

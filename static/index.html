@@ -190,8 +190,9 @@
             $(document).ready(function(){
                 setInterval(function(){
 
-                                $.getJSON('https://bloter-im-message-072017.herokuapp.com/getEvents',
-                                {},
+			        //var urlApp = 'https://bloter-im-message-072017.herokuapp.com/getEvents'
+				var urlApp = 'http://35.187.113.52/getEvents' ;	
+                                $.getJSON(urlApp, {},
                                 function(data)
                                 {
                                         if (data.slack.status === "New") {
@@ -216,9 +217,12 @@
 
     <script>
             //$('#slackText').click(slackSend());
+         
             function copySheet(){
 
-                $.getJSON('https://bloter-im-message-072017.herokuapp.com/copyConfirm',
+                var url = 'http:/35.187.113.52/copyConfirm';
+		    //$.getJSON('https://bloter-im-message-072017.herokuapp.com/copyConfirm',
+                $.getJSON(url,
                 {},
                                 function(data)
                                 {
@@ -233,7 +237,8 @@
 
 
     <script>
-            //$('#slackText').click(slackSend());
+
+           // button Send clicket, content of text field should be send by REST to slack
             function slackSend(){
                 //some code
 
@@ -249,14 +254,15 @@
 //  dataType: "json"
 //});
 
-                $.post("https://hooks.slack.com/services/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",
-                        jsonData,
-                        'json'
-                ).done(function(data) {
+		//var urlSlack = "https://hooks.slack.com/services/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" // slack 1
+		var urlSlack = "https://hooks.slack.com/services/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"
+		
+                $.post(urlSlack, jsonData, 'json').done(function(data) 
+		{
                         $("#slackText").val("");
                 })
 
-            };
+            }; // function slackSend()
 
 
     </script>
