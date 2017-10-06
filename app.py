@@ -235,7 +235,7 @@ def copyConfirm():
 # ------ called by index.html to return events -----
 @app.route('/getEvents', methods=['GET'])
 def getEvents():
-    #print("getEvents")
+    print("-------- getEvents ---------")
 #    resLen = 200
 
     result = {}
@@ -271,6 +271,8 @@ def getEvents():
         response.set_cookie(key, value=str(rowsid[key]), max_age=25)
     return response
 
+
+#------------------------------------------
 @app.route('/<path:path>')
 def root(path):
     print(path)   
@@ -279,6 +281,7 @@ def root(path):
     return app.send_static_file(path)
 
 
+#------------------------------------------
 def processRequest(req):
     print("processRequest")
     akcja = req.get("result").get("action") 
@@ -294,6 +297,8 @@ def processRequest(req):
         return {}
     return res
 
+
+#------------------------------------------
 def slacksafe(req):
     # SlackEvent:
     # {
@@ -339,6 +344,8 @@ def slacksafe(req):
 
     return r
 
+
+#------------------------------------------
 def setupDirs(req):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     #qdir = os.path.join(script_dir, req.get("api_app_id"), req.get("team_id"), req.get("token"))
@@ -349,6 +356,8 @@ def setupDirs(req):
 
     return qdir
 
+
+#------------------------------------------
 def getApiaiSessionID(req, opener):
     print("getApiaiSessionID")
 
@@ -437,13 +446,12 @@ def talkToSlack(speech):
     print("Talk to Slack")
     #url = "https://hooks.slack.com/services/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"
     #url  = "https://hooks.slack.com/services/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"
-    url = "https://hooks.slack.com/services/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"  # url dl GClouda
+    url = "https://hooks.slack.com/services/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"  # incoming Slack webhookk
     text = { "text": speech }
     data = json.dumps(text).encode('utf8')
     request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'})
 
     response = urllib.request.urlopen(request)
-
     return ""
 
 
@@ -460,6 +468,8 @@ def botAdvices(req, slackreq):
 
     return ""
 
+
+#-------------------------------------------------------------------------------------
 def getSlackUsername(req):
     # TODO decode SlackUserID to real Username
     if ("user" in req.get("event")):
@@ -902,6 +912,8 @@ def updateRow(sheetid, sheetRange, values):
  
     return response
 
+
+#-------------------------------
 def getLines(filename, rowid):
     #"token": "PY65kzYVuPSsilmUlpmWz0tF",
     #"team_id": "T4ZSTBWU8",
@@ -916,6 +928,7 @@ def getLines(filename, rowid):
     try:
         f = open(qdir, 'r')
     except IOError as e:
+        print("in getLines(), can not open file: " + qdir)
         return "", 0
 
     i = 1
