@@ -122,10 +122,10 @@ keywordsMapping = {
 userNames = {
         "U51AG5P50": "Cyrus",
         "U50KLKUQL": "Mahul" 
-
         }
 
 
+#--------------------------------------------------------------
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
@@ -142,6 +142,7 @@ def webhook():
     return r
 
 
+#--------------------------------------------------------------
 @app.route('/querytext', methods=['POST'])
 def queryText():
     req = request.get_json(silent=True, force=True)
@@ -196,7 +197,7 @@ def slackEvents():
 
 
     executor = ProcessPoolExecutor(5)
-    print("SlackEvent:")
+    print("--------------- SlackEvent:")
     print(json.dumps(req, indent=4))
 
     if ("challenge" in req):
@@ -210,6 +211,7 @@ def slackEvents():
     return res
 
 
+#------------------------------------------------------------
 @app.route('/copyConfirm', methods=['GET'])
 def copyConfirm():
     
@@ -235,7 +237,7 @@ def copyConfirm():
 # ------ called by index.html to return events -----
 @app.route('/getEvents', methods=['GET'])
 def getEvents():
-    print("-------- getEvents ---------")
+    print("-- getEventssss  ---")
 #    resLen = 200
 
     result = {}
@@ -275,7 +277,7 @@ def getEvents():
 #------------------------------------------
 @app.route('/<path:path>')
 def root(path):
-    print(path)   
+    print("Path: " + path)   
     # print(os.path.dirname(os.path.realpath(__file__)))
 
     return app.send_static_file(path)
@@ -373,6 +375,8 @@ def getApiaiSessionID(req, opener):
 
     return None
 
+
+#----------------------------------------------------
 def setApiaiSessionID(req, opener):
     print("setApiaiSessionID")
 
@@ -390,6 +394,8 @@ def setApiaiSessionID(req, opener):
 
     return getApiaiSessionID(req, opener)
 
+
+#-------------------------------------------------------------
 def postApiAI(opener, req):
     print("postAPIAI")
     i = 0
@@ -482,6 +488,8 @@ def getSlackUsername(req):
         
     return "<b>" + result + "</b>"
 
+
+#-------------------------------------------------------------------
 def slackverify(req):
     print("SlackVerify")
     result = { "challenge" : req.get("challenge") }
@@ -494,6 +502,8 @@ def slackverify(req):
     #print(result)
     return r
 
+
+#-------------------------------------------------------------------
 def get_credentials():
     """Gets valid user credentials from storage.
 
@@ -526,6 +536,8 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
+
+#--------------------------------------------------------------------------------------
 def gmailLogin():
     """Shows basic usage of the Google Calendar API.
 
@@ -577,6 +589,7 @@ def returnSpeech(speech, displayText=None, contexts=[], followUpEvent={}):
 
     return result
 
+#-------------------------------------------------------------------
 def getParam(req, field):
     if (field in req.get("result").get("parameters")):
         if (type(req.get("result").get("parameters").get(field)) is list):
@@ -585,6 +598,7 @@ def getParam(req, field):
             return str(req.get("result").get("parameters").get(field))
     return None
 
+#-------------------------------------------------------------------
 def getSParam(req, field):
     result = getParam(req, field)
     if result is None:
@@ -592,6 +606,7 @@ def getSParam(req, field):
 
     return result
 
+#-------------------------------------------------------------------
 def grepSpeech(req):
     for word in keywordsMapping:
         if (word in str.lower(req.get("event").get("text"))):
@@ -602,6 +617,7 @@ def grepSpeech(req):
 
     return None
 
+#-------------------------------------------------------------------
 def manageApiResult(req, apiai):
     query = apiai.get("result").get("resolvedQuery")
     print("manageApiResult")
@@ -618,6 +634,7 @@ def manageApiResult(req, apiai):
                 
     return None
 
+#-------------------------------------------------------------------
 def eventSave(req, field, value):
     print("event: %s, %s" % (field, value))
     if (field in siteUpdate):
@@ -630,6 +647,7 @@ def eventSave(req, field, value):
 
     return ""
 
+#-------------------------------------------------------------------
 def getContextParam(req, name, field):
     for context in req.get("result").get("contexts"):
         if context.get("name") == name:
@@ -644,6 +662,7 @@ def getContextParam(req, name, field):
 
     return None
 
+#-------------------------------------------------------------------
 def getStrFromDict(value):
     result = ""
     for key in value:
@@ -651,6 +670,7 @@ def getStrFromDict(value):
 
     return result
 
+#-------------------------------------------------------------------
 def removeMeeting(req):
     
     print("removeMeeting")
@@ -686,6 +706,7 @@ def removeMeeting(req):
     }
 
 
+#-------------------------------------------------------------------
 def prepareHeaders(req):
     print("Create Headers")
     value_range_body = {
@@ -703,6 +724,7 @@ def prepareHeaders(req):
 
     return returnSpeech(speech)
 
+#-------------------------------------------------------------------
 def createBloterConv(req):
 
     if req.get("result").get("actionIncomplete") == True:
@@ -710,6 +732,7 @@ def createBloterConv(req):
 
     return createRow(req)
 
+#-------------------------------------------------------------------
 def getMaxDate(req, field):
     dateArray = getDateArray(req.get("result").get("parameters").get(field))
 
@@ -729,6 +752,7 @@ def getMaxDate(req, field):
     else:
         return datetime.datetime.strftime(result, '%d.%m.%Y')
 
+#-------------------------------------------------------------------
 def getMinDate(req, field):
     dateArray = getDateArray(req.get("result").get("parameters").get(field))
 
@@ -748,6 +772,7 @@ def getMinDate(req, field):
     else:
         return datetime.datetime.strftime(result, '%d.%m.%Y')
 
+#-------------------------------------------------------------------
 def getDateArray(oneArray):
     dateArray = []
     testDate = None
@@ -759,6 +784,7 @@ def getDateArray(oneArray):
     
     return dateArray
 
+#-------------------------------------------------------------------
 def getMaxNumber(req, field):
     testOne = None
 
@@ -771,6 +797,7 @@ def getMaxNumber(req, field):
     else:
         return testOne
 
+#-------------------------------------------------------------------
 def getMinNumber(req, field):
     testOne = None
 
@@ -784,6 +811,7 @@ def getMinNumber(req, field):
         return testOne
 
 
+#-------------------------------------------------------------------
 def createRow(req):
     print("Create ROW")
 
@@ -828,6 +856,7 @@ def createRow(req):
 
 
 
+#-------------------------------------------------------------------
 def createConv(req):
     
     client = "Client: " + req.get("result").get("resolvedQuery") + "\n"
@@ -840,6 +869,7 @@ def createConv(req):
     return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
 
+#-------------------------------------------------------------------
 def createConversation(req):
     print("Create Conv")
     value_range_body = {
@@ -858,6 +888,7 @@ def createConversation(req):
 
     return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
+#-------------------------------------------------------------------
 def appendRow(sheetid, sheetRange, values):
     print("Append ROW")
 
@@ -890,6 +921,7 @@ def appendRow(sheetid, sheetRange, values):
     return response
 
 
+#-------------------------------------------------------------------
 def updateRow(sheetid, sheetRange, values):
     print("Update ROW")
 
@@ -947,6 +979,7 @@ def getLines(filename, rowid):
     return result, i
 
 
+#-------------------------------------------------------------------
 def getRows(sheetid, sheetRange):
     print("Get ROWs" + sheetRange)
 
@@ -1127,6 +1160,6 @@ Actions = {
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 80))
 
-    print("Starting app on port %d" % port)
+    print("Starting app.py on port %d" % port)
     print(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%dT%H:%M:%SZ')),
     app.run(debug=True, port=port, host='0.0.0.0')
