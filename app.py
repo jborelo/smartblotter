@@ -465,6 +465,7 @@ def talkToSlack(speech):
     #url = "https://hooks.slack.com/services/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"
     #url  = "https://hooks.slack.com/services/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"
     url = "https://hooks.slack.com/services/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"  # incoming Slack webhookk
+    
     text = { "text": speech }
     data = json.dumps(text).encode('utf8')
     request = urllib.request.Request(url, data=data, headers={'content-type': 'application/json'})
@@ -827,40 +828,60 @@ def getMinNumber(req, field):
 
 #-------------------------------------------------------------------
 def createRow(req):
-    print("Create ROW")
+    print("-- in createROW --")
 
     #createConv(req)
     if ("resolvedQuery" in req.get("result") and (req.get("result").get("resolvedQuery") == "HI" or req.get("result").get("resolvedQuery") == "conversation_event")):
+        print("seems Normal Conversation")
         return returnSpeech("NORMAL CONVERSATION")
 
     if ("resolvedQuery" in req.get("result") and (req.get("result").get("resolvedQuery") == "RECAPS" or req.get("result").get("resolvedQuery") == "extractEntities_event")):
+        print("seems getting recaps")
         return returnSpeech("Get RECAPS")
+
+
+    print("entities detect mode")
+
 
     #if req.get("result").get("actionIncomplete") == True:
     #    return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
     dealNr = "%f" % time.time()
 
+    print("entities detect mode 2")
     value_range_body = {
         "values": [
             [ 
                 dealNr[:10],                                    # Deal Number
                 datetime.datetime.strftime(datetime.datetime.now(), '%d.%m.%Y'), # Current Date
+                print("buyer"),        # Buyer
                 getSParam(req, "buyer"),        # Buyer
+                print("trader"),        # Buyer
                 getSParam(req, "trader"),       # Seller
-                getMinDate(req, "date-period"),    # StartDate
-                getMaxDate(req, "date-period"),    # EndDate
+                print("min date-per"),        # Buyer
+                #getMinDate(req, "date-period"),    # StartDate jbo
+                "2018-01-01",
+                print("max date-per"),        # Buyer
+                #getMaxDate(req, "date-period"),    # EndDate
+                "2018-01-01",
+                print("quan"),        # Buyer
                 getSParam(req, "quantity"),     # Quantity #getMaxNumber(req, "number1"),     # Quantity
+                print("quan unit"),        # Buyer
                 getSParam(req, "quantityunit"), # QuantityUnit
+                print("price"),        # Buyer
                 getSParam(req, "price"),        # Price #getMinNumber(req, "number1"),        # Price
+                print("curren"),        # Buyer
                 getSParam(req, "currency"),     # Currency
                 #"GBP",                          # Currency
-                getSParam(req, "location")      # Location
+                print("location"),        # Buyer
+                getSParam(req, "locatio")      # Location
             ]
         ]
 
     }
 
+    print(" ** entities detect mode 3")
+    print(value_range_body)
     appendRow(SourceSheetID, "Trades to confirm!A5", value_range_body)
 
     speech = "Added"
@@ -902,9 +923,10 @@ def createConversation(req):
 
     return returnSpeech(req.get("result").get("fulfillment").get("speech"))
 
+
 #-------------------------------------------------------------------
 def appendRow(sheetid, sheetRange, values):
-    print("Append ROW")
+    print("-- in appnedRow()")
 
     service = gmailLogin()
 
@@ -1082,7 +1104,7 @@ def getLicense(req):
 def setValue(sessionId, query=None, event=None):
 
     values = {
-            "v"           : "20150910",
+            "v"           : "20170712",
             "sessionId"   : sessionId,
             "lang"        : "en"
             }
@@ -1125,7 +1147,9 @@ def postForm(opener, values):
 
 
 #--------------------------------------------------------------------------------------------------------
-def askPage(opener, url="https://api.api.ai/v1/query?v=20150910", data=None, headers=None, method='GET'):
+#  new: api.dialogflow.com/v1
+#--------------------------------------------------------------------------------------------------------
+def askPage(opener, url="https://api.api.ai/v1/query?v=20170712", data=None, headers=None, method='GET'):
     print("-- in askPage() --")
     request = urllib.request.Request(url, method=method)
     if headers is not None:
@@ -1158,6 +1182,8 @@ def getTest(req):
 
     return 0
 
+
+#-----------------------------------------------
 def defaultIntent(req):
     
     if ("resolvedQuery" not in req.get("result")):
@@ -1187,6 +1213,7 @@ Actions = {
     'extractEntities_action': createRow,
     'CreateConv' : createBloterConv
 }
+
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 80))
