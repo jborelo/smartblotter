@@ -193,6 +193,8 @@ def slackEvents():
 
 
 # event od slacka idzie do  kolejek (plikow) i zwracamy 200
+#  tak naprawde zalozone jest ze res sie skonczy i jego wynik 
+#  do sprawdzenia
 # startowany jest proces (thread)  do  rozmowy z APi.AI
 
 
@@ -203,8 +205,8 @@ def slackEvents():
     if ("challenge" in req):
         res = slackverify(req)
     else:
-        res = executor.submit(slacksafe, req)
-        res2 = executor.submit(apiaiAsk, req)
+        res = executor.submit(slacksafe, req) # slacksafe() saves text got from slack to local file 'slack'
+        res2 = executor.submit(apiaiAsk, req) # apiaiAsk sie wykonuje w tle  dluzej i rozmawia z API.AI
         executor.shutdown(wait=False)
         return res.result()
         
@@ -300,7 +302,7 @@ def processRequest(req):
     return res
 
 
-#------------------------------------------
+#----------  stores text from request to file 'slack' in order to show in web  --------------------------------
 def slacksafe(req):
     # SlackEvent:
     # {
@@ -323,21 +325,20 @@ def slacksafe(req):
     #     "event_id": "Ev70ENM5MK",
     #     "event_time": 1504890432
     # }
-    print("Slack Save")
+    print("-- in slacksave() --")
     #time.sleep(5)
     qdir = setupDirs(req)
-
     qfile = os.path.join(qdir, 'slack')
 
-    print(qfile)
+    # print(qfile)
 
     slackMessage = getSlackUsername(req) + "</br>" + req.get("event").get("text").replace('\n', '</br>') + "\n"
-    print(slackMessage)
+    #print(slackMessage)
 
     with open(qfile, "a") as myfile:
         myfile.write(slackMessage)
     
-    print("Dodane")
+    print("Dodane do pliku slack: " + slackMessage)
     res = { "result": "OK" }
     res = json.dumps(res, indent=4)
     r = make_response(res)
@@ -347,7 +348,7 @@ def slacksafe(req):
     return r
 
 
-#------------------------------------------
+#-------------------------------------------------------------------------------------------------
 def setupDirs(req):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     #qdir = os.path.join(script_dir, req.get("api_app_id"), req.get("team_id"), req.get("token"))
@@ -361,15 +362,15 @@ def setupDirs(req):
 
 #------------------------------------------
 def getApiaiSessionID(req, opener):
-    print("getApiaiSessionID")
+    print("-- in getApiaiSessionID() --")
 
     url = "https://api.api.ai/v1/contexts?sessionId=" + req.get("token")
     result = askPage(opener, url=url, headers=setHeaders())
 
     result = result.read().decode('utf-8')
 
-    print(result)
-    print(len(result))
+    #print(result)
+    #print(len(result))
     if (result is not None and len(result) > 5):
         return result
 
@@ -378,7 +379,7 @@ def getApiaiSessionID(req, opener):
 
 #----------------------------------------------------
 def setApiaiSessionID(req, opener):
-    print("setApiaiSessionID")
+    print("-- in setApiaiSessionID() --")
 
     url = "https://api.api.ai/v1/contexts?sessionId=" + req.get("token")
     result = askPage(opener, url=url, headers=setHeaders(), method='DELETE')
@@ -397,33 +398,44 @@ def setApiaiSessionID(req, opener):
 
 #-------------------------------------------------------------
 def postApiAI(opener, req):
-    print("postAPIAI")
+    print("-- in postApAI() --")
+    maxloops = 10
     i = 0
     while(True):
+        print("")
+        print ("loop: " + str(i))
         result = postForm(opener, setValue(req.get("token"), query=req.get("event").get("text")))
         result = json.loads(result)
         i += 1
+        rescode = result.get("status").get("code") 
         print(result)
-        if (result.get("status").get("code") == 200 or i > 10):
+
+        if(rescode == 200):
+            print("APIAI returned 200")
             break
+
+        if ( i > maxloops):
+            print ("Maxloops exceded!")
+            break
+
          
-    print("Finish postAPIAI")
+    print("Finish postAPIAIi with rescode: " + str(rescode))
     return result
 
 
-# ---------- calls API.AI ------------------
+# ---------- talks in separate process (currently not thread) with  API.AI to parse  submition  ------------------
 def apiaiAsk(req): 
-    print("apiaiAsk")
+    print("--in apiaiAsk() --")
     opener = setSession()
     sessionID = getApiaiSessionID(req, opener)
 
     if ("recap" in str.lower(req.get("event").get("text"))):
-        print("SetSession")
+        print("RECUP found")
         sessionID = setApiaiSessionID(req, opener)
     elif ("user" not in req.get("event")):
         print("BOT GADA")
         return True
-    
+   
     grepSpeech(req)
     # We are waiting for RECAPS"
     
@@ -463,7 +475,7 @@ def talkToSlack(speech):
 
 #------------------------------------------------------------------------------------------------------
 def botAdvices(req, slackreq):
-    print("botAdvice")
+    print("-- in botAdvices() --")
     print(req)
     if (getParam(req, "recaps") == "recaps" and req.get("result").get("actionIncomplete") == True):
         talkToSlack(req.get("result").get("fulfillment").get("speech"))
@@ -634,6 +646,7 @@ def manageApiResult(req, apiai):
                 
     return None
 
+
 #-------------------------------------------------------------------
 def eventSave(req, field, value):
     print("event: %s, %s" % (field, value))
@@ -646,6 +659,7 @@ def eventSave(req, field, value):
                 myfile.write(content.get(key))
 
     return ""
+
 
 #-------------------------------------------------------------------
 def getContextParam(req, name, field):
@@ -1029,6 +1043,8 @@ def sapLogin():
     urllib.request.install_opener(opener)
     return opener
  
+
+#------------------------------------------------------------------------------------
 def setSession():
     # Tutaj zrobi sobie pytanie do SAPa
     
@@ -1046,11 +1062,14 @@ def setSession():
 
     urllib.request.install_opener(opener)
     return opener
-    
+
+
+#-------------------------------------------------
 def getResultParam(req, field):
 
     return req.get("result").get("parameters").get(field)
 
+#-------------------------------------------------
 def getLicense(req):
     
     opener = sapLogin()
@@ -1059,6 +1078,7 @@ def getLicense(req):
 
     return result.read().decode('utf-8')
 
+#-------------------------------------------------
 def setValue(sessionId, query=None, event=None):
 
     values = {
@@ -1077,6 +1097,7 @@ def setValue(sessionId, query=None, event=None):
 
     return None
 
+#-------------------------------------------------
 def setHeaders():
     headers = {
             'Authorization': 'Bearer f6c6b3478a5e43afb16dcb91b2778d13',
@@ -1085,6 +1106,8 @@ def setHeaders():
 
     return headers
 
+
+#-------------------------------------------------
 def postForm(opener, values):
     print("POST FORM")
     
@@ -1101,24 +1124,32 @@ def postForm(opener, values):
     return result.read().decode('utf-8')
 
 
+#--------------------------------------------------------------------------------------------------------
 def askPage(opener, url="https://api.api.ai/v1/query?v=20150910", data=None, headers=None, method='GET'):
-
+    print("-- in askPage() --")
     request = urllib.request.Request(url, method=method)
     if headers is not None:
         for key in headers:
             request.add_header(key, headers[key])
 
+    print("method: ")
     pprint(request.get_method())
+    print("url: ")
     pprint(request.get_full_url())
+    print("items: ")
     pprint(request.header_items())
+    print(" ")
 
     try:
         result = opener.open(request, data)
     except IOError as e:
+        print("!!!! ERROR!!!")
         print (e)
 
     return result
 
+
+#-----------------------------------------------
 def getTest(req):
 
     # Ustalamy sesje - logujemy sie
